@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Login Page{% endblock %}
+
+{% block body %}
+
+  <h2>Create an Account</h2>
+  <form action="/register" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+    <p>
+      Password <input type="password" name="password">
+    </p>
+    <p>
+      <!-- <input type="submit"> -->
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </p>
+  </form>
+
+  <h2>Log In</h2>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+    <p>
+      Password <input type="password" name="password">
+    </p>
+    <p>
+      <!-- <input type="submit"> -->
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </p>
+  </form>
+{% endblock %}

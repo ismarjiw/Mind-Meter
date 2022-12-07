@@ -1,6 +1,7 @@
 'use strict'; 
 
 console.log('Connected!')
+
 const five = document.getElementById('five')
 
 five.addEventListener('click', function () {
@@ -53,14 +54,33 @@ ten.addEventListener('click', function () {
 
 ////////////////////////////////////////////////////////////
 
-// 1. This code loads the IFrame Player API code asynchronously.
+var getReflection = function(){
+    content = document.getElementById("content").value;
+    return content;
+};
+var clearReflection = function(){
+    document.getElementById("content").value = "";
+};
+var handleReflection = function(){
+    var output = document.getElementById("content").value;
+    if ( output == '' ){
+        alert("Enter a message");
+    }
+    else {
+        alert("Thank you for your submission.");
+    }
+};
+
+////////////////////////////////////////////////////////////
+
+// This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// 2. This function creates an <iframe> (and YouTube player)
+// This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 var player1, player2, player3, player4;
     function onYouTubeIframeAPIReady() {
@@ -141,7 +161,7 @@ var player1, player2, player3, player4;
         } 
     });
     } 
-// 3. Toggles the play buttons and audio 
+// Toggles the play buttons and audio 
     function togglePlayButton1(play) {    
     document.getElementById("youtube-icon1").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
     }
@@ -197,13 +217,13 @@ var player1, player2, player3, player4;
         togglePlayButton4(true);
     } 
     } 
-
+    // API will call this function when video player is ready
     function onPlayerReady1(event) {
     player1.setPlaybackQuality("small");
     document.getElementById("youtube-audio1").style.display = "block";
     togglePlayButton1(player1.getPlayerState() !== 5);
     }
-
+    // API calls this function when the player's state changes - indicates that when playing a video (state = 1) the player should play 
     function onPlayerStateChange1(event) {
     if (event.data === 0) {
         togglePlayButton1(false); 
@@ -245,4 +265,4 @@ var player1, player2, player3, player4;
         togglePlayButton4(false); 
     }
     }
-
+////////////////////////////////////////////////////////////

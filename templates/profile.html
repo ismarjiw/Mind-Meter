@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} Profile Page {% endblock %}
+
+{% block body %}
+
+Profile page
+
+<!-- <h1>(( user.user_id ))</h1> ## replace with {}
+
+<p>
+(( user.email )) ## replace with {}
+</p> -->
+
+<div id = "journal">
+    <div class = "text">
+        <textarea id = "content" cols = "64" rows = "3" placeholder = "How are you feeling today?"></textarea>
+        <button id = "submit" onclick = "handleMessage()">Submit</button>
+    </div>
+</div>
+
+
+{% endblock %}
