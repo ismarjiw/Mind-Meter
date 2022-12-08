@@ -3,19 +3,19 @@
 
 {% block body %}
 
-Profile page
-
 <!-- <h1>(( user.user_id ))</h1> ## replace with {}
 
 <p>
 (( user.email )) ## replace with {}
 </p> -->
 
-<div id = "journal">
-    <div class = "text">
-        <textarea id = "content" cols = "64" rows = "3" placeholder = "How are you feeling today?"></textarea>
-        <button id = "submit" onclick = "handleMessage()">Submit</button>
-    </div>
+
+<div class="notes__preview">
+    <input class="notes__title" type="text" placeholder="Enter a title...">
+    <textarea class="notes__body" placeholder="Enter your message..."></textarea>
+</div>
+<div class="notes__sidebar">
+    <button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-md px-5 py-2.5 text-center mr-2 mb-2">Add Note</button>
 </div>
 
 
