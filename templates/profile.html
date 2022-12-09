@@ -1,21 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'logout.html' %}
 {% block title %} Profile Page {% endblock %}
 
 {% block body %}
 
-<!-- <h1>(( user.user_id ))</h1> ## replace with {}
+<section id="timer">
 
-<p>
-(( user.email )) ## replace with {}
-</p> -->
+    <label for="timer">Select how long you would like to meditate in minutes:</label>
+    <button id='five' type="button" value=5 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">5</button>
+    <button id='ten' type="button" value=10 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">10</button>
 
+    <div id= "timer-result"> </div>
 
-<div class="notes__preview">
-    <input class="notes__title" type="text" placeholder="Enter a title...">
-    <textarea class="notes__body" placeholder="Enter your message..."></textarea>
-</div>
-<div class="notes__sidebar">
-    <button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-md px-5 py-2.5 text-center mr-2 mb-2">Add Note</button>
+</section>
+
+<h1>Meditation Data</h1>
+
+<div id="meditation-data"></div>
+
+<a href="/profile/{{session['user_id']}}">Click here to write a reflection to add to your meditation journal</a>
+
+<a href="/journal">Click here to see all journal entries</a>
+
+<!-- youtube sound buttons -->
+<div style="display:flex;justify-content:center;align-items:center;">
+    <div style="width:400px;height:300px;">
+        <div data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
+        <div data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
+        <div data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
+        <div data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
+        <div style="clear:both;margin:10px;text-align:center">
+        </div>
+    </div>
 </div>
 
 

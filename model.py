@@ -33,7 +33,7 @@ class Meditation(db.Model):
 
     meditation_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id")) ##nullable=False
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     length = db.Column(db.Integer)
     date = db.Column(db.DateTime)
 
@@ -103,6 +103,7 @@ class Sound(db.Model):
 
     def __repr__(self):
         return f'<Sound sound_id={self.sound_id} name={self.name}>'
+
 
 class SongPlay(db.Model):
     """A song played by Spotify"""

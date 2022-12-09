@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+	head
+		title API | Granim.js
+		meta(name='description', content='API for granim.js. Gradients animations in javascript.')
+		include includes/head
+		link(type='text/css', rel='stylesheet', href='assets/css/prism.css')
+
+	body.api
+		include includes/header
+
+		.main-content
+			.container.bloc
+				h1 API Versions list
+				ul.api-versions-list
+					li
+						a(href='api-v2.0.0.html') V2.0.0
+					li
+						a(href='api-v1.1.1.html') V1.1.1
+				
+			include includes/footer
+
+		include includes/js-vendor
+		script(type='text/javascript').
+			var pageId = 'api';
+		script(src='assets/js/script.js')
+		include includes/js-analytics

@@ -1,13 +1,15 @@
-from flask import (Flask, render_template, request, flash, session, redirect)
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
 import time 
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
 app.secret_key = "hackbright"
 app.jinja_env.undefined = StrictUndefined
+
 
 @app.route('/')
 def homepage():
@@ -15,11 +17,13 @@ def homepage():
 
     return render_template('index.html')
 
+
 @app.route("/login")
 def login_page():
     """Login page"""
 
     return render_template("login.html")
+
 
 @app.route("/login", methods = ["POST"])
 def user_login_page():
@@ -27,18 +31,22 @@ def user_login_page():
 
     password = request.form.get("password")
     email = request.form.get("email")
-    user_password = crud.check_user_by_password(password, email)
+    user = crud.check_user_by_password(password, email)
 
-    ## how to get to specific user profile page after logging in ##
-
-    if user_password:
+    if user:
         flash("Welcome back! Happy meditating :)")
         session["email"] = email
-        return render_template("profile.html")
+        session["user_id"] = user.user_id
+        return redirect("/profile")
     else:
         flash("Incorrect email or password. Please try to login again.")
         return redirect("/login")
-        
+
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+
+    return redirect('/')
 
 @app.route("/register", methods=["POST"])
 def register_user():
@@ -47,7 +55,7 @@ def register_user():
     password = request.form.get("password")
     email = request.form.get("email")
     user = crud.get_user_by_email(email)
-
+    
     if user:
         flash("Account already created. Please login.")
         return redirect("/login")
@@ -57,15 +65,85 @@ def register_user():
         db.session.commit()
         flash("Account created! Happy meditating :)")
         session["email"] = email
-        return render_template("profile.html")
+        session["user_id"] = user.user_id
 
-@app.route("/profile/<user_id>")
+        return redirect("/profile")
+
+@app.route("/profile")
+def profile():
+    """Renders profile page if a user is logged in"""
+    if 'user_id' not in session:
+        return redirect("/login")
+
+    return render_template("profile.html")
+
+@app.route("/profile/<user_id>", methods=('GET', 'POST'))
 def profile_page(user_id):
-    """View user profile page after login"""
+    """View user profile journal page"""
 
     user = crud.get_user_by_id(user_id)
+    users = crud.get_users()
 
-    return render_template('profile.html', user=user)
+    if 'meditation_id' in session:
+        if request.method == 'POST':
+            title = request.form['title']
+            content = request.form['content']
+            reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
+            db.session.add(reflection)
+            db.session.commit()
+            del session['meditation_id'] 
+            return redirect ("/profile")
+    else:
+        flash('Please meditate again before trying to write a new reflection :)')
+        return redirect ("/profile")
+
+    return render_template('journal.html', user=user, users=users)
+
+@app.route("/meditation", methods=['POST'])
+def start_meditation():
+    """Establishes meditation session and adds it to the database"""
+    length = request.json.get('length')
+    date = datetime.now()
+
+    meditation = crud.create_meditation(session['user_id'], length=length, date=date)
+    db.session.add(meditation)
+    db.session.commit()
+    session['meditation_id'] = meditation.meditation_id
+
+    return {'meditation_id' : meditation.meditation_id}
+
+@app.route("/journal")
+def journal_entries():
+    """Return all journal entries associated to specific user"""
+    if 'user_id' in session:
+    
+        reflections = crud.get_reflections_by_id(user_id = session['user_id'])
+    else:
+        return redirect("/login")
+
+    return render_template("all_reflections.html", reflections=reflections)
+
+@app.route('/meditations_this_week.json')
+def meditation_log():
+    """Get meditation sessions date and length as JSON"""
+
+    ##TODO: import actual dates and lengths of 
+    # meditation sessions from db
+
+    dates = []
+    date = datetime.now()
+    for _ in range(7):
+        dates.append(date)
+        date = date - timedelta(days=1)
+    length_totals = [20, 24, 36, 27, 20, 17, 22]
+
+    weekly_meditations = zip(dates, length_totals)
+
+    meditations_this_week = []
+    for date, total in weekly_meditations:
+        meditations_this_week.append({ 'date': date.isoformat(), 'length': total })
+
+    return jsonify({'data':meditations_this_week})
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")

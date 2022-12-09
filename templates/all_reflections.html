@@ -1,0 +1,23 @@
+{% extends 'logout.html' %}
+{% block title %} Journal Page {% endblock %}
+
+{% block body %}
+
+
+<div class="reflections">
+{% for reflection in reflections %}
+    <div class="reflection">
+        <p><b>Title:</b></p>
+        <b>
+            <p class="title">{{ reflection.title }}</p>
+        </b>
+        <div class="content">
+            <h4>Content:</h4>
+            <p>{{ reflection.content }}</p>
+        </div>
+    </div>
+{% endfor %}
+</div>   
+
+
+{% endblock %}

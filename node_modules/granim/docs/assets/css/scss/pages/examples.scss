@@ -1,0 +1,116 @@
+/*
+	Examples Page
+*/
+
+body.examples {
+	padding-top: 50px;
+}
+
+.sandbox {
+	position: relative;
+	height: 300px;
+	border: solid 2px #eee;
+	border-radius: 4px;
+	background-color: #eee;
+
+	canvas {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border-radius: 4px;
+	}
+}
+
+.sandbox-footer {
+	position: relative;
+	display: flex;
+	align-items: baseline;
+	padding: 10px 20px;
+	background-color: #f5f2f0;
+	margin-top: -4px;
+	border-radius: 0 0 4px 4px;
+	z-index: 1;
+
+	.option {
+		font-size: 14px;
+		font-weight: bold;
+		margin-right: 15px;
+		&:last-child {margin-right: 0}
+
+		input[type=checkbox] {
+			position: relative;
+			top: 2px;
+		}
+	
+		select {margin-left: 5px}
+	}
+}
+
+.code-wrapper {margin-top: 30px}
+
+#canvas-image {
+	background-image: url("../img/bg-forest.jpg");
+	background-position-x: 50%;
+}
+
+.canvas-image-wrapper {
+	height: 100px;
+	background-color: #eee;
+	text-align: center;
+
+	.bloc-logo {
+		display: inline-block;
+		margin-top: 25px;
+		float: none;
+	}
+}
+
+.canvas-interactive-wrapper {
+	text-align: center;
+
+	.cta-wrapper {
+		margin-top: 136px;
+
+		span {
+			position: relative;
+			display: inline-block;
+			margin-right: 50px;
+			z-index: 1;
+			&:last-child {margin-right: 0}
+
+			a {
+				display: inline-block;
+				padding: 3px 7px;
+				border: solid 1px transparent;
+				text-decoration: none;
+				font-size: 17px;
+				color: #222;
+				transition: border .3s;
+				&.active {
+					border-color: #222;
+				}
+				@include desk {
+					&:hover {border-color: rgba(0,0,0,.25)}
+					&.active:hover {border-color: #222}
+				}
+			}
+		}
+
+		@include mob {
+			margin-top: 91px;
+
+			span {
+				display: block;
+				margin: 0 0 20px;
+				&:last-child {margin-bottom: 0}
+
+				a {font-size: 15px}
+			}
+		}
+	}
+}

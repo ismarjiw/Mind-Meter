@@ -1,0 +1,50 @@
+doctype html
+html(lang="en")
+	head
+		title Granim.js - Gradient Animations
+		meta(name='description', content='Create fluid and interactive gradient animations with this small javascript library.')
+		include includes/head
+
+	body.home
+		#canvas-wrapper
+			canvas#granim-canvas
+			.content-wrapper
+				.description-wrapper
+					h1.title(title='granim.js')
+						include ./includes/logo.html
+						span.name Granim.js
+					p.description
+						| Create fluid and interactive gradient animations<br>
+						| with this small javascript library.
+				nav
+					a#dark-state.link(href='examples.html') Examples
+					a#light-state.link(href='api-v2.0.0.html') API
+					a#green-state.link(href='https://github.com/sarcadass/granim.js/releases', target='_blank', rel='external') Download
+
+		#social-wrapper
+			a.github(href='https://github.com/sarcadass/granim.js', target='_blank', title='Github', rel='external')
+				include includes/github-logo.html
+			a.cta-social.cta-facebook(
+			href='http://www.facebook.com/sharer.php?u=http://sarcadass.github.io/granim.js'
+			target='_blank'
+			rel='external')
+				include includes/facebook-logo.html
+				| Share on Facebook
+			a.cta-social.cta-twitter(
+			href='https://twitter.com/share?text=Create%20fluid%20and%20interactive%20gradients%20animations%20with%20this%20small%20%28<%2010kB%29%20.js%20library&via=Sarcadass&url=http%3A%2F%2Fsarcadass.github.io%2Fgranim.js'
+			target='_blank'
+			rel='external')
+				include includes/twitter-logo.html
+				| Share on Twitter
+		footer#home-footer
+			strong Granim v
+				span.version-number=locals.version
+			| .<br> Created by <a href="https://twitter.com/Sarcadass" target="_blank">Benjamin Blonde</a>,
+			| MIT license.
+
+		script(src='assets/js/vendor/jquery-3.1.0.min.js')
+		script(src='assets/js/vendor/granim.min.js')
+		script(type='text/javascript').
+			var pageId = 'homepage';
+		script(src='assets/js/script.js')
+		include includes/js-analytics

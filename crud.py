@@ -27,24 +27,40 @@ def get_user_by_email(email):
 def check_user_by_password(password, email):
     """Return a user by password."""
     
-    if User.query.filter(User.password == password).first() and User.query.filter(User.email == email).first():
-        return True
+    user = User.query.filter(User.email == email).first()
+    if user.password == password:
+        return user 
     else:
-        return False
+        return False 
 
-def create_meditation(length, date):
+
+def create_meditation(user_id, length, date):
     """Create and return a new meditation session."""
 
-    meditation = Meditation(length=length, date=date)
+    meditation = Meditation(user_id=user_id, length=length, date=date)
 
     return meditation
 
-def create_reflection(title, content):
+def get_meditation_by_id(meditation_id):
+    """Return meditation by id"""
+
+    return Meditation.query.get(meditation_id)
+
+def create_reflection(meditation_id, user_id, title, content):
     """Create and return a new reflection"""
 
-    reflection = Reflection(title=title, content=content)
+    reflection = Reflection(meditation_id=meditation_id, user_id=user_id, title=title, content=content)
 
     return reflection
+def get_all_reflections():
+    """Return all reflections"""
+
+    return Reflection.query.all()
+
+def get_reflections_by_id(user_id):
+    """Return reflections by user id"""
+
+    return Reflection.query.filter_by(user_id = user_id)
 
 def create_tag(tag):
     """Create and return a new tag"""

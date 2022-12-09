@@ -27,6 +27,29 @@ five.addEventListener('click', function () {
         countdown(5, 0);
 });
 
+
+// TODO: Need to figure out how to set length to either 5 or 10 depending on which button is pressed; for now only works with 5 
+
+
+function startMeditation(evt) {
+    evt.preventDefault();
+    const length = document.getElementById('five').value;
+
+    fetch('/meditation', {
+        method: 'POST',
+        body: JSON.stringify({length}),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        document.getElementById('meditation-data').innerText = JSON.stringify(responseJson)
+    });
+};
+document.getElementById('five').addEventListener('click', startMeditation);
+
+
 const ten = document.getElementById('ten')
 
 ten.addEventListener('click', function () {
@@ -53,24 +76,6 @@ ten.addEventListener('click', function () {
 });
 
 ////////////////////////////////////////////////////////////
-
-var getReflection = function(){
-    content = document.getElementById("content").value;
-    return content;
-};
-var clearReflection = function(){
-    document.getElementById("content").value = "";
-};
-var handleReflection = function(){
-    var output = document.getElementById("content").value;
-    if ( output == '' ){
-        alert("Enter a message");
-    }
-    else {
-        alert("Thank you for your submission.");
-    }
-};
-
 ////////////////////////////////////////////////////////////
 
 // This code loads the IFrame Player API code asynchronously.
@@ -265,4 +270,39 @@ var player1, player2, player3, player4;
         togglePlayButton4(false); 
     }
     }
+//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+
+
+fetch('/meditations_this_week.json')
+.then((response) => response.json())
+.then((responseJson) => {
+    const data = responseJson.data.map((dailyTotal) => ({
+    x: dailyTotal.date,
+    y: dailyTotal.length,
+    }));
+
+    new Chart(document.querySelector('#line-time'), {
+    type: 'line',
+    data: {
+        datasets: [
+        {
+            label: 'All sessions',
+            data, // equivalent to data: data
+        },
+        ],
+    },
+    options: {
+        scales: {
+        x: {
+            type: 'time',
+            time: {
+            tooltipFormat: 'LLLL dd', // Luxon format string
+            unit: 'day',
+            },
+        },
+        },
+    },
+    });
+});
+

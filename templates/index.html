@@ -1,30 +1,21 @@
 {% extends 'base.html' %}
-    {% block title %} Mind Meter {% endblock %}
-   
+{% block title %} Mind Meter {% endblock %}
+
+{% block head %}
+{# ChartJS #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+
+{# If you want to use time scales, you have to import a date library and the Chart.js adapter #}
+<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js"></script>
+
+{% endblock %}
+
 {% block body %}
 
-
-  <section id="timer">
-
-      <label for="timer">Select how long you would like to meditate in minutes:</label>
-      <button id='five' type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">5</button>
-      <button id='ten' type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">10</button>
-
-      <div id= "timer-result"> </div>
-
-  </section>
-
-
-  <div style="display:flex;justify-content:center;align-items:center;">
-      <div style="width:400px;height:300px;">
-          <div data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
-          <div data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
-          <div data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
-          <div data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
-          <div style="clear:both;margin:10px;text-align:center">
-          </div>
-      </div>
-  </div>
-
-
+<div id="site-content">
+    <h2>Line Chart w/ Time Scale</h2>
+    <canvas id="line-time"></canvas>
+</div>
+    
 {% endblock %}
