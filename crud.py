@@ -1,4 +1,5 @@
 from model import db, User, Meditation, Reflection, Tag, Sound, SongPlay, connect_to_db
+from flask import json
 from datetime import datetime
 
 
@@ -46,12 +47,29 @@ def get_meditation_by_id(meditation_id):
 
     return Meditation.query.get(meditation_id)
 
+def all_meditation_dates(user_id):
+    """Return all meditation dates by user_id"""
+
+    all_dates = db.session.query(Meditation.date)
+    user_dates = all_dates.filter(Meditation.user_id == user_id)
+
+    return user_dates.all()
+
+def all_meditation_lengths(user_id):
+    """Return all meditation dates by user_id"""
+
+    all_lengths = db.session.query(Meditation.length)
+    user_lengths = all_lengths.filter(Meditation.user_id == user_id)
+
+    return user_lengths.all()
+
 def create_reflection(meditation_id, user_id, title, content):
     """Create and return a new reflection"""
 
     reflection = Reflection(meditation_id=meditation_id, user_id=user_id, title=title, content=content)
 
     return reflection
+    
 def get_all_reflections():
     """Return all reflections"""
 
@@ -68,6 +86,11 @@ def create_tag(tag):
     tag = Tag(tag=tag)
 
     return tag
+
+def get_tags():
+    """Return all tags"""
+
+    return Tag.query.all()
 
 def create_sound(url, name):
     """Create and return a sound"""

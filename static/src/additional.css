@@ -19,7 +19,8 @@
 }
 
 .notes__title,
-.notes__body {
+.notes__body,
+.notes__tag {
     border: none;
     outline: none;
     width: 100%;
@@ -36,4 +37,12 @@
     line-height: 1.5;
     margin-top: 2em;
     resize: none;
+}
+
+.notes__tag {
+    flex-shrink: 1;
+    font-size: 1em;
+    line-height: 1;
+    margin-top: 1em;
+    resize: none; 
 }

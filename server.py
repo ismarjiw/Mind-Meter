@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify, json)
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
@@ -84,10 +84,16 @@ def profile_page(user_id):
     user = crud.get_user_by_id(user_id)
     users = crud.get_users()
 
+    ##TODO: how do i isolate a tag speciifc to a reflection? 
+
     if 'meditation_id' in session:
         if request.method == 'POST':
             title = request.form['title']
             content = request.form['content']
+            tag = request.form['tag']
+            tag = crud.create_tag(tag=tag)
+            db.session.add(tag)
+            db.session.commit()
             reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
             db.session.add(reflection)
             db.session.commit()
@@ -118,23 +124,35 @@ def journal_entries():
     if 'user_id' in session:
     
         reflections = crud.get_reflections_by_id(user_id = session['user_id'])
+        tags = crud.get_tags()
     else:
         return redirect("/login")
 
-    return render_template("all_reflections.html", reflections=reflections)
+    return render_template("all_reflections.html", reflections=reflections, tags=tags)
 
 @app.route('/meditations_this_week.json')
 def meditation_log():
-    """Get meditation sessions date and length as JSON"""
+    """Get meditation sessions date and length as JSON per user_id"""
+
+    total_dates = crud.all_meditation_dates(session['user_id']) 
+    # -> how to make JSONable?
+    # length_totals = crud.all_meditation_lengths(session['user_id'])
+    # -> how to make JSONable? 
+
+    print('*'*50)
+    print(total_dates)
+    print(session['user_id'])
+    print('*'*50)
 
     ##TODO: import actual dates and lengths of 
-    # meditation sessions from db
+    # meditation sessions from db per user_id
 
     dates = []
     date = datetime.now()
     for _ in range(7):
         dates.append(date)
         date = date - timedelta(days=1)
+    print(dates)
     length_totals = [20, 24, 36, 27, 20, 17, 22]
 
     weekly_meditations = zip(dates, length_totals)

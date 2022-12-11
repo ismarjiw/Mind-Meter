@@ -79,7 +79,7 @@ class Tag(db.Model):
 
     __tablename__ = "tags"
 
-    tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
 
     tag = db.Column(db.String) 
 
