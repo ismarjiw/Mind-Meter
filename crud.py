@@ -47,21 +47,20 @@ def get_meditation_by_id(meditation_id):
 
     return Meditation.query.get(meditation_id)
 
-def all_meditation_dates(user_id):
-    """Return all meditation dates by user_id"""
+def get_time_length_meditation(user_id):
+    """Returns date and total length of meditation sessions per day"""
+    user = User.query.get(user_id)
+    
+    when_time_meditated = {}
 
-    all_dates = db.session.query(Meditation.date)
-    user_dates = all_dates.filter(Meditation.user_id == user_id)
+    for meditation in user.meditations:
+        if meditation.date.date() == meditation.date.date():
+            if meditation.date.date() in when_time_meditated:
+                when_time_meditated[meditation.date.date()] += meditation.length
+            else:
+                when_time_meditated[meditation.date.date()] = meditation.length
 
-    return user_dates.all()
-
-def all_meditation_lengths(user_id):
-    """Return all meditation session lengths by user_id"""
-
-    all_lengths = db.session.query(db.func.sum(Meditation.length), Meditation.date).group_by(Meditation.date)
-    user_lengths = all_lengths.filter(Meditation.user_id == user_id)
-
-    return user_lengths.all()
+    return when_time_meditated
 
 def create_reflection(meditation_id, user_id, title, content):
     """Create and return a new reflection"""

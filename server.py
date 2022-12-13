@@ -136,27 +136,10 @@ def journal_entries():
 def meditation_log():
     """Get meditation sessions date and length as JSON per user_id"""
 
-    total_dates = crud.all_meditation_dates(session['user_id']) 
-    new_dates = []
-    for dates in total_dates:
-        new_dates.append(dates)
-    dates = (list(itertools.chain(*new_dates)))
-    print(dates)
-
-    total_lengths = crud.all_meditation_lengths(session['user_id'])
-    new_lengths = []
-    for lengths in total_lengths:
-        new_lengths.append(lengths)
-    length_totals = (list(itertools.chain(*new_lengths)))
-
-    ##TODO: how to sum lengths of meditation sessions per day 
-    print('*'*50)
-    print(length_totals)
-    
-    weekly_meditations = zip(dates, length_totals)
+    med_data = crud.get_time_length_meditation(session['user_id'])
 
     meditations_this_week = []
-    for date, total in weekly_meditations:
+    for date, total in med_data.items():
         meditations_this_week.append({ 'date': date.isoformat(), 'length': total })
 
     return jsonify({'data':meditations_this_week})
