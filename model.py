@@ -19,6 +19,7 @@ class User(db.Model):
 
     meditations = db.relationship("Meditation", back_populates="users")
     reflections = db.relationship("Reflection", back_populates="users")
+
     sounds = db.relationship("Sound", back_populates="users")
     songplays = db.relationship("SongPlay", back_populates="users")
 
@@ -54,25 +55,26 @@ class Reflection(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.Text, nullable=False)
-
-    users = db.relationship("User", uselist=False, back_populates="reflections")
-    tags = db.relationship("Tag", secondary='reflection_tags', back_populates="reflections")
+    
+    users = db.relationship("User", uselist=False,back_populates="reflections")
     meditation = db.relationship("Meditation", uselist=False, back_populates='reflection')
+    tags = db.relationship("Tag", secondary='reflection_tags', back_populates="reflections")
+
 
     def __repr__(self):
         return f'<Reflection id={self.meditation_id} title={self.title}>'
 
 class ReflectionTag(db.Model):
-    """Holds reflection_tags"""
+    """Tag of a specific reflection"""
 
     __tablename__ = 'reflection_tags'
 
     reflection_tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    reflection_id = db.Column(db.Integer, db.ForeignKey("reflections.meditation_id"))
-    tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"))
-
+    reflection_id = db.Column(db.Integer, db.ForeignKey("reflections.meditation_id"), nullable=False)
+    tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"), nullable=False)
+    ### why don't my reflection_tag_ids increment?!
     def __repr__(self):
-        return f"<ReflectionTag reflection_tag_id={self.reflection_tag_id}>"
+        return f"<ReflectionTag reflection_id = {self.reflection_id} tag_id = {self.tag_id}>"
 
 class Tag(db.Model):
     """A journal tag"""

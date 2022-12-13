@@ -4,6 +4,7 @@ import crud
 from jinja2 import StrictUndefined
 import time 
 from datetime import datetime, timedelta
+import itertools
 
 app = Flask(__name__)
 
@@ -122,9 +123,9 @@ def start_meditation():
 def journal_entries():
     """Return all journal entries associated to specific user"""
     if 'user_id' in session:
-    
         reflections = crud.get_reflections_by_id(user_id = session['user_id'])
         tags = crud.get_tags()
+        ##TODO: what is the exact relationship between tag/reflection/meditation? i don't know how to associate 1 tag per reflection
     else:
         return redirect("/login")
 
@@ -135,26 +136,22 @@ def meditation_log():
     """Get meditation sessions date and length as JSON per user_id"""
 
     total_dates = crud.all_meditation_dates(session['user_id']) 
-    # -> how to make JSONable?
-    # length_totals = crud.all_meditation_lengths(session['user_id'])
-    # -> how to make JSONable? 
-
-    print('*'*50)
-    print(total_dates)
-    print(session['user_id'])
-    print('*'*50)
-
-    ##TODO: import actual dates and lengths of 
-    # meditation sessions from db per user_id
-
-    dates = []
-    date = datetime.now()
-    for _ in range(7):
-        dates.append(date)
-        date = date - timedelta(days=1)
+    new_dates = []
+    for dates in total_dates:
+        new_dates.append(dates)
+    dates = (list(itertools.chain(*new_dates)))
     print(dates)
-    length_totals = [20, 24, 36, 27, 20, 17, 22]
 
+    total_lengths = crud.all_meditation_lengths(session['user_id'])
+    new_lengths = []
+    for lengths in total_lengths:
+        new_lengths.append(lengths)
+    length_totals = (list(itertools.chain(*new_lengths)))
+
+    ##TODO: how to sum lengths of meditation sessions per day 
+    print('*'*50)
+    print(length_totals)
+    
     weekly_meditations = zip(dates, length_totals)
 
     meditations_this_week = []
@@ -162,6 +159,19 @@ def meditation_log():
         meditations_this_week.append({ 'date': date.isoformat(), 'length': total })
 
     return jsonify({'data':meditations_this_week})
+
+@app.route('/delete-reflection/<meditation_id>')
+def delete_reflection(meditation_id):
+    """Delete reflection from journal"""
+
+    if meditation_id != None:
+        deleted_entry = crud.get_reflection_by_med_id(meditation_id)
+        db.session.delete(deleted_entry)
+        db.session.commit()
+    else:
+        flash("Unable to delete reflection.")
+        
+    return redirect("/journal")
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")

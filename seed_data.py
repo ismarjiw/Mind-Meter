@@ -52,9 +52,13 @@ tag1 = Tag (
             tag= 'happy'
             )
 
+# tag1.reflection = ref1
+
 tag2 = Tag (
             tag= 'sad'
             )
+
+# tag2.reflection = ref2
 
 sound1 = Sound (
             url= 'https://www.youtube.com/watch?v=42M3esYyHdw',

@@ -2,6 +2,8 @@
 
 console.log('Connected!')
 
+///////////////////////////////////////////
+
 const five = document.getElementById('five')
 
 five.addEventListener('click', function () {
@@ -28,7 +30,7 @@ five.addEventListener('click', function () {
 });
 
 
-// TODO: Need to figure out how to set length to either 5 or 10 depending on which button is pressed; for now only works with 5 
+// TODO: Figure out how to not repeat startMeditation function for both 5 and 10 min timer
 
 
 function startMeditation(evt) {
@@ -75,6 +77,23 @@ ten.addEventListener('click', function () {
         countdown(10, 0);
 });
 
+function startMeditation(evt) {
+    evt.preventDefault();
+    const length = document.getElementById('ten').value;
+
+    fetch('/meditation', {
+        method: 'POST',
+        body: JSON.stringify({length}),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        document.getElementById('meditation-data').innerText = JSON.stringify(responseJson)
+    });
+};
+document.getElementById('ten').addEventListener('click', startMeditation);
 /////////////////////////////////////////////////////
 
 // This code loads the IFrame Player API code asynchronously.

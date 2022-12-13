@@ -56,9 +56,9 @@ def all_meditation_dates(user_id):
     return user_dates.all()
 
 def all_meditation_lengths(user_id):
-    """Return all meditation dates by user_id"""
+    """Return all meditation session lengths by user_id"""
 
-    all_lengths = db.session.query(Meditation.length)
+    all_lengths = db.session.query(db.func.sum(Meditation.length), Meditation.date).group_by(Meditation.date)
     user_lengths = all_lengths.filter(Meditation.user_id == user_id)
 
     return user_lengths.all()
@@ -80,6 +80,11 @@ def get_reflections_by_id(user_id):
 
     return Reflection.query.filter_by(user_id = user_id)
 
+def get_reflection_by_med_id(meditation_id):
+    """Return reflection by meditation id"""
+
+    return Reflection.query.filter_by(meditation_id = meditation_id).first()
+
 def create_tag(tag):
     """Create and return a new tag"""
 
@@ -91,6 +96,11 @@ def get_tags():
     """Return all tags"""
 
     return Tag.query.all()
+
+def get_tag_by_id(meditation_id):
+    """Return tags by meditation id"""
+
+    return Tag.query.filter_by(meditation_id=meditation_id).first()
 
 def create_sound(url, name):
     """Create and return a sound"""
