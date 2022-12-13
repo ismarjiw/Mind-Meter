@@ -2,6 +2,7 @@
 
 console.log('Connected!')
 
+var audio = new Audio('https://assets.ctfassets.net/v3n26e09qg2r/5m3SPslo3HRy1DGTnGgpwb/a5c12d0e6285e4a4cb2d1cc5d266dc21/Breath.mp3')
 ///////////////////////////////////////////
 
 const five = document.getElementById('five')
@@ -16,9 +17,11 @@ five.addEventListener('click', function () {
                 seconds-=1;
                 if (seconds >= 0) {
                     timeoutHandle = setTimeout(tick, 1000);
-                } else {
-                    if (minutes >= 1) {
-                        setTimeout(function () {
+                } else if (seconds == 0 && minutes == 0) {
+                        audio.play();
+                    } else { 
+                        if (minutes >= 1) {
+                            setTimeout(function () {
                             countdown(minutes - 1, 59);
                         }, 1000);
                     }

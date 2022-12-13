@@ -11,16 +11,14 @@
             <p class="title">{{ reflection.title }}</p>
         </b>
         <div class="content">
-            <h4>Content:</h4>
+            <b><h4>Content:</h4></b>
             <p>{{ reflection.content }}</p>
-            <p>{{ reflection.meditation.date.strftime('%d-%m-%Y @ %I:%M:%S') }}</p>
-            <button onclick="onClickDelete( '{{reflection.meditation_id}}' )" type="button" class="delete text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete</button>
-            {% endfor %}
-            {% for tag in tags %}
+            <p>{{ reflection.meditation.date.strftime('%m-%d-%Y @ %I:%M:%S') }}</p>
             <div class="'tag">
                 <b><h3>Tag:</h3></b>
-                <p>{{ tag.tag }} </p>
+                <p>{{ reflection.tags }} </p>
             </div>
+            <button onclick="onClickDelete( '{{reflection.meditation_id}}' )" type="button" class="delete text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete</button>
         </div>
     </div>
 
