@@ -7,13 +7,11 @@
 {% for reflection in reflections %}
     <div class="reflection">
         <p><b>Title:</b></p>
-        <b>
             <p class="title">{{ reflection.title }}</p>
-        </b>
         <div class="content">
             <b><h4>Content:</h4></b>
             <p>{{ reflection.content }}</p>
-            <p>{{ reflection.meditation.date.strftime('%m-%d-%Y @ %I:%M:%S') }}</p>
+            <i><p>{{ reflection.meditation.date.strftime('%m-%d-%Y @ %I:%M:%S') }}</p></i>
             <div class="'tag">
                 <b><h3>Tag:</h3></b>
                 <p>{{ reflection.tags }} </p>

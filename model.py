@@ -88,7 +88,8 @@ class Tag(db.Model):
     reflections = db.relationship("Reflection", secondary='reflection_tags', back_populates="tags")
 
     def __repr__(self):
-        return f'<Tag id={self.tag_id} tag={self.tag}>'
+        return f'{self.tag}'
+        # return f'<Tag id={self.tag_id} tag={self.tag}>'
 
 class Sound(db.Model):
     """A calming sound"""

@@ -2,7 +2,7 @@
 
 console.log('Connected!')
 
-var audio = new Audio('https://assets.ctfassets.net/v3n26e09qg2r/5m3SPslo3HRy1DGTnGgpwb/a5c12d0e6285e4a4cb2d1cc5d266dc21/Breath.mp3')
+var audio = new Audio('https://assets.ctfassets.net/v3n26e09qg2r/5m3SPslo3HRy1DGTnGgpwb/a5c12d0e6285e4a4cb2d1cc5d266dc21/Breath.mp3') // from Headspace downloadable audio 
 ///////////////////////////////////////////
 
 const five = document.getElementById('five')
@@ -12,17 +12,17 @@ five.addEventListener('click', function () {
         function countdown(minutes, seconds) {
             function tick() {
                 var counter = document.getElementById("timer-result");
-                counter.innerHTML =
-                    minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+                counter.innerHTML = 
+                minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
                 seconds-=1;
-                if (seconds >= 0) {
+                if (seconds == 0 && minutes == 0) {
+                    audio.play();
+                } else if (seconds >= 0) {
                     timeoutHandle = setTimeout(tick, 1000);
-                } else if (seconds == 0 && minutes == 0) {
-                        audio.play();
-                    } else { 
-                        if (minutes >= 1) {
-                            setTimeout(function () {
-                            countdown(minutes - 1, 59);
+                } else { 
+                    if (minutes >= 1) {
+                        setTimeout(function () {
+                        countdown(minutes - 1, 59);
                         }, 1000);
                     }
                 }
@@ -63,9 +63,11 @@ ten.addEventListener('click', function () {
             function tick() {
                 var counter = document.getElementById("timer-result");
                 counter.innerHTML =
-                    minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+                minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
                 seconds-=1;
-                if (seconds >= 0) {
+                if (seconds == 0 && minutes == 0) {
+                    audio.play();
+                } else if (seconds >= 0) {
                     timeoutHandle = setTimeout(tick, 1000);
                 } else {
                     if (minutes >= 1) {

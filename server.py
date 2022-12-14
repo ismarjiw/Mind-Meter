@@ -92,7 +92,7 @@ def profile_page(user_id):
             title = request.form['title']
             content = request.form['content']
             tag = request.form['tag']
-            tag = crud.create_tag(tag=tag)
+            tag = str(crud.create_tag(tag=tag))
             db.session.add(tag)
             db.session.commit()
             reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
@@ -123,10 +123,9 @@ def start_meditation():
 @app.route("/journal")
 def journal_entries():
     """Return all journal entries associated to specific user"""
+    
     if 'user_id' in session:
         reflections = crud.get_reflections_by_id(user_id = session['user_id'])
-        # tags = crud.get_tags()
-        ##TODO: what is the exact relationship between tag/reflection/meditation? i don't know how to associate 1 tag per reflection
     else:
         return redirect("/login")
 

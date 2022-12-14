@@ -2,10 +2,9 @@
 {% block title %} Mind Meter {% endblock %}
 
 {% block head %}
+
 {# ChartJS #}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
-
-{# If you want to use time scales, you have to import a date library and the Chart.js adapter #}
 <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js"></script>
 
@@ -13,8 +12,8 @@
 
 {% block body %}
 
-<div id="site-content">
-    <h2>Line Chart w/ Time Scale</h2>
+<div id="site-content" style="width:600px;height:250px">
+    <h2>Bar Chart w/ Time Scale</h2>
     <canvas id="line-time"></canvas>
 </div>
 
@@ -28,12 +27,14 @@
     }));
 
     new Chart(document.querySelector('#line-time'), {
-    type: 'line',
+    type: 'bar',
     data: {
         datasets: [
         {
             label: 'Minutes meditated',
             data, // equivalent to data: data
+            borderColor: '#5D75BB',
+            backgroundColor: '#5D75BB',
         },
         ],
     },

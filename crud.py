@@ -1,6 +1,7 @@
 from model import db, User, Meditation, Reflection, Tag, Sound, SongPlay, connect_to_db
 from flask import json
 from datetime import datetime
+from sqlalchemy import desc
 
 
 def create_user(email, password):
@@ -77,7 +78,7 @@ def get_all_reflections():
 def get_reflections_by_id(user_id):
     """Return reflections by user id"""
 
-    return Reflection.query.filter_by(user_id = user_id)
+    return Reflection.query.filter_by(user_id = user_id).order_by(Reflection.meditation_id.desc())
 
 def get_reflection_by_med_id(meditation_id):
     """Return reflection by meditation id"""
