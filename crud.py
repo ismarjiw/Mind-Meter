@@ -2,6 +2,7 @@ from model import db, User, Meditation, Reflection, Tag, Sound, SongPlay, connec
 from flask import json
 from datetime import *
 from sqlalchemy import desc
+from passlib.hash import pbkdf2_sha256
 
 
 def create_user(email, password):
@@ -26,10 +27,30 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email == email).first()
 
+def create_hash_account(email, password):
+    """Hashes password"""
+
+    hashed_password = pbkdf2_sha256.hash(password)
+
+    user = User(email=email, password=hashed_password)
+
+    return user
+
+def check_hash_account(email, password):
+    """Check if hashed pw in db matches entered password"""
+
+    user = User.query.filter(User.email == email).first()
+
+    if pbkdf2_sha256.verify(password, user.password):
+        return user
+    else:
+        return False
+
 def check_user_by_password(password, email):
     """Return a user by password."""
     
     user = User.query.filter(User.email == email).first()
+
     if user.password == password:
         return user 
     elif user.password != password:

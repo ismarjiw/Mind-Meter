@@ -2,9 +2,8 @@ from flask import (Flask, render_template, request, flash, session, redirect, js
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
-import time 
-from datetime import datetime, timedelta
-import itertools
+from datetime import *
+from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
@@ -25,14 +24,14 @@ def login_page():
 
     return render_template("login.html")
 
-
 @app.route("/login", methods = ["POST"])
 def user_login_page():
     """Logs in the user"""
 
     password = request.form.get("password")
     email = request.form.get("email")
-    user = crud.check_user_by_password(password, email)
+    
+    user = crud.check_hash_account(email, password)
 
     if user:
         flash("Welcome back! Happy meditating :)")
@@ -63,7 +62,7 @@ def register_user():
         flash("Account already created. Please login.")
         return redirect("/login")
     elif user == None:
-        user = crud.create_user(email, password)
+        user = crud.create_hash_account(email, password)
         db.session.add(user)
         db.session.commit()
         flash("Account created! Happy meditating :)")
