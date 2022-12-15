@@ -23,15 +23,12 @@
 {% endfor %}
 </div>   
 
-
-
 <script>
     
     function onClickDelete(meditation_id) {
         fetch(`/delete-reflection/${meditation_id}`) 
             .then((response) => {
-                alert("Entry deleted");
-                location.reload()
+                window.location = '/journal';
         });
     };
 

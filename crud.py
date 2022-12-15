@@ -32,9 +32,8 @@ def check_user_by_password(password, email):
     user = User.query.filter(User.email == email).first()
     if user.password == password:
         return user 
-    else:
+    elif user.password != password:
         return False 
-
 
 def create_meditation(user_id, length, date):
     """Create and return a new meditation session."""
@@ -50,6 +49,7 @@ def get_meditation_by_id(meditation_id):
 
 def get_time_length_meditation(user_id):
     """Returns date and total length of meditation sessions per day"""
+
     user = User.query.get(user_id)
     
     when_time_meditated = {}
@@ -63,20 +63,21 @@ def get_time_length_meditation(user_id):
 
     return when_time_meditated
 
-def streak_count(user_id):
-    """Get streak count if user logged meditation session today and yesterday"""
+def on_streak(user_id):
+    """Display 'on streak' if user logged meditation session today and yesterday"""
 
     user = User.query.get(user_id)
-    streak_count = 1
-    ### figure out way to increment streak count over time 
+    streak = False 
+    today = date.today()
+    yesterday = date.today() - timedelta(days = 1)
+    meditation_dates = []
+
     for meditation in user.meditations:
-        if meditation.date.date() == date.today():
-            if meditation.date.date() == date.today() - timedelta(days = 1):
-                streak_count += 1
-            else:
-                streak_count = 1
-    
-    return streak_count
+        meditation_dates.append(meditation.date.date())
+    if today and yesterday in meditation_dates:
+        streak = True
+
+    return streak
 
 def create_reflection(meditation_id, user_id, title, content):
     """Create and return a new reflection"""
@@ -125,7 +126,6 @@ def create_sound(url, name):
     return sound
 
 ### def for SongPlay if can connect to Spotify API
-
 
 if __name__ == '__main__':
     from server import app

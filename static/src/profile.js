@@ -2,8 +2,9 @@
 
 console.log('Connected!')
 
-var audio = new Audio('https://assets.ctfassets.net/v3n26e09qg2r/5m3SPslo3HRy1DGTnGgpwb/a5c12d0e6285e4a4cb2d1cc5d266dc21/Breath.mp3') // from Headspace downloadable audio 
-///////////////////////////////////////////
+var meditationId; 
+
+var audio = new Audio('https://assets.ctfassets.net/v3n26e09qg2r/5m3SPslo3HRy1DGTnGgpwb/a5c12d0e6285e4a4cb2d1cc5d266dc21/Breath.mp3')
 
 const five = document.getElementById('five')
 
@@ -32,10 +33,6 @@ five.addEventListener('click', function () {
         countdown(5, 0);
 });
 
-
-// TODO: Figure out how to not repeat startMeditation function for both 5 and 10 min timer
-
-
 function startMeditation(evt) {
     evt.preventDefault();
     const length = document.getElementById('five').value;
@@ -49,7 +46,8 @@ function startMeditation(evt) {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        document.getElementById('meditation-data').innerText = JSON.stringify(responseJson)
+        // document.getElementById('meditation-data').innerText = JSON.stringify(responseJson);
+        meditationId = responseJson['meditation_id'];
     });
 };
 document.getElementById('five').addEventListener('click', startMeditation);
@@ -95,7 +93,8 @@ function startMeditation(evt) {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        document.getElementById('meditation-data').innerText = JSON.stringify(responseJson)
+        // document.getElementById('meditation-data').innerText = JSON.stringify(responseJson)
+        meditationId = responseJson['meditation_id']; 
     });
 };
 document.getElementById('ten').addEventListener('click', startMeditation);

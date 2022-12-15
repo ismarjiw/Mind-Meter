@@ -45,6 +45,8 @@ def user_login_page():
 
 @app.route("/logout")
 def logout():
+    """Logs out user"""
+
     session.pop('user_id', None)
 
     return redirect('/')
@@ -72,15 +74,25 @@ def register_user():
 
 @app.route("/profile")
 def profile():
-    """Renders profile page if a user is logged in"""
+    """Renders profile page if a user logged in and displays if they've meditated the day before"""
+
+    user = crud.get_user_by_id(session['user_id'])
+
     if 'user_id' not in session:
         return redirect("/login")
 
-    return render_template("profile.html")
+    show_streak = crud.on_streak(session['user_id'])
+
+    if show_streak == True:
+        streak = ["🔥 Great job, you're on a streak! Remember to meditate tomorrow 😌"]
+    else:
+        streak = ["It's okay to miss a day. Remember to meditate tomorrow 😌"]
+
+    return render_template("profile.html", streak=streak, user=user)
 
 @app.route("/profile/<user_id>", methods=('GET', 'POST'))
 def profile_page(user_id):
-    """View user profile journal page"""
+    """View user profile journal page to add reflection to journal"""
 
     user = crud.get_user_by_id(user_id)
     users = crud.get_users()
@@ -108,6 +120,7 @@ def profile_page(user_id):
 @app.route("/meditation", methods=['POST'])
 def start_meditation():
     """Establishes meditation session and adds it to the database"""
+
     length = request.json.get('length')
     date = datetime.now()
 
@@ -116,8 +129,9 @@ def start_meditation():
     db.session.commit()
     session['meditation_id'] = meditation.meditation_id
 
-    # return {'meditation_id' : meditation.meditation_id}
-    return True 
+    return {'meditation_id' : meditation.meditation_id}
+
+    ##TODO: what is another way i can add meditation to session without printing meditation_id info to page?
 
 @app.route("/journal")
 def journal_entries():
@@ -154,6 +168,19 @@ def delete_reflection(meditation_id):
         flash("Unable to delete reflection.")
         
     return redirect("/journal")
+
+@app.route('/delete-account/<user_id>')
+def delete_account(user_id):
+    """Delete account"""
+    
+    if user_id != None:
+        account_to_delete = crud.get_user_by_id(session['user_id'])
+        db.session.delete(account_to_delete)
+        db.session.commit()
+    else:
+        flash('Unable to delete account.')
+
+    return redirect ("/")
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")
