@@ -1,6 +1,6 @@
 from model import db, User, Meditation, Reflection, Tag, Sound, SongPlay, connect_to_db
 from flask import json
-from datetime import datetime
+from datetime import *
 from sqlalchemy import desc
 
 
@@ -62,6 +62,21 @@ def get_time_length_meditation(user_id):
                 when_time_meditated[meditation.date.date()] = meditation.length
 
     return when_time_meditated
+
+def streak_count(user_id):
+    """Get streak count if user logged meditation session today and yesterday"""
+
+    user = User.query.get(user_id)
+    streak_count = 1
+    ### figure out way to increment streak count over time 
+    for meditation in user.meditations:
+        if meditation.date.date() == date.today():
+            if meditation.date.date() == date.today() - timedelta(days = 1):
+                streak_count += 1
+            else:
+                streak_count = 1
+    
+    return streak_count
 
 def create_reflection(meditation_id, user_id, title, content):
     """Create and return a new reflection"""

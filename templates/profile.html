@@ -1,6 +1,13 @@
 {% extends 'logout.html' %}
 {% block title %} Profile Page {% endblock %}
 
+{% block head %}
+{# ChartJS #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js"></script>
+{% endblock %}
+
 {% block body %}
 
 <section id="timer">
@@ -13,7 +20,9 @@
 
 </section>
 
-<h1 style="color:white">Meditation Data</h1>
+<h1>Streak:</h1>
+<div id="streak "> 1 🔥 </div>
+
 <div style="color:white" id="meditation-data"></div>
 
 <a href="/profile/{{session['user_id']}}">Click here to write a reflection to add to your meditation journal</a>
@@ -21,6 +30,47 @@
     <a href="/journal">Click here to see all journal entries</a>
 </div>
 
+
+<div id="site-content" style="width:600px;height:250px">
+    <h2>Bar Chart w/ Time Scale</h2>
+    <canvas id="line-time"></canvas>
+</div>
+
+<script>
+    fetch('/meditations_this_week.json')
+.then((response) => response.json())
+.then((responseJson) => {
+    const data = responseJson.data.map((dailyTotal) => ({
+    x: dailyTotal.date,
+    y: dailyTotal.length,
+    }));
+
+    new Chart(document.querySelector('#line-time'), {
+    type: 'bar',
+    data: {
+        datasets: [
+        {
+            label: 'Minutes meditated',
+            data, // equivalent to data: data
+            borderColor: '#5D75BB',
+            backgroundColor: '#5D75BB',
+        },
+        ],
+    },
+    options: {
+        scales: {
+        x: {
+            type: 'time',
+            time: {
+            tooltipFormat: 'LLLL dd', // Luxon format string
+            unit: 'day',
+            },
+        },
+        },
+    },
+    });
+});
+</script>
 
 <!-- youtube sound buttons -->
 <div style="display:flex;justify-content:center;align-items:center;">

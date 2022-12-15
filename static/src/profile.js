@@ -15,7 +15,7 @@ five.addEventListener('click', function () {
                 counter.innerHTML = 
                 minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
                 seconds-=1;
-                if (seconds == 0 && minutes == 0) {
+                if (seconds < 0 && minutes == 0) {
                     audio.play();
                 } else if (seconds >= 0) {
                     timeoutHandle = setTimeout(tick, 1000);
@@ -65,7 +65,7 @@ ten.addEventListener('click', function () {
                 counter.innerHTML =
                 minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
                 seconds-=1;
-                if (seconds == 0 && minutes == 0) {
+                if (seconds < 0 && minutes == 0) {
                     audio.play();
                 } else if (seconds >= 0) {
                     timeoutHandle = setTimeout(tick, 1000);

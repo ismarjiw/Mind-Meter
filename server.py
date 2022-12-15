@@ -85,14 +85,12 @@ def profile_page(user_id):
     user = crud.get_user_by_id(user_id)
     users = crud.get_users()
 
-    ##TODO: how do i isolate a tag speciifc to a reflection? 
-
     if 'meditation_id' in session:
         if request.method == 'POST':
             title = request.form['title']
             content = request.form['content']
             tag = request.form['tag']
-            tag = str(crud.create_tag(tag=tag))
+            tag = crud.create_tag(tag=tag)
             db.session.add(tag)
             db.session.commit()
             reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
@@ -118,12 +116,13 @@ def start_meditation():
     db.session.commit()
     session['meditation_id'] = meditation.meditation_id
 
-    return {'meditation_id' : meditation.meditation_id}
+    # return {'meditation_id' : meditation.meditation_id}
+    return True 
 
 @app.route("/journal")
 def journal_entries():
     """Return all journal entries associated to specific user"""
-    
+
     if 'user_id' in session:
         reflections = crud.get_reflections_by_id(user_id = session['user_id'])
     else:
@@ -159,3 +158,4 @@ def delete_reflection(meditation_id):
 if __name__ == "__main__":
     connect_to_db(app, "meditations")
     app.run(host="0.0.0.0", debug=True)
+
