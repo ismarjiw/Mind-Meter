@@ -1,22 +1,38 @@
+import os 
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify, json)
+from flask_session import Session
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
 from datetime import *
 from passlib.hash import pbkdf2_sha256
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+import random
+from random import choice
 
 app = Flask(__name__)
-
 app.secret_key = "hackbright"
 app.jinja_env.undefined = StrictUndefined
+app.config['SECRET_KEY'] = os.urandom(64)
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = './.flask_session/'
+Session(app)
+TOKEN_INFO = 'token_info'
 
+FORTUNES = [
+    "Start where you are. Use what you have. Do what you can",
+    "Putting yourself fully into what you do is a form of love",
+    "Do what you love. The rest will fall into place",
+    "Speak good things about yourself into existence",
+    "Let the difference between where you are and where you want to be inspire you",
+]
 
 @app.route('/')
 def homepage():
     """View homepage."""
 
     return render_template('index.html')
-
 
 @app.route("/login")
 def login_page():
@@ -30,8 +46,9 @@ def user_login_page():
 
     password = request.form.get("password")
     email = request.form.get("email")
-    
+
     user = crud.check_hash_account(email, password)
+    ## if want to access [toast] or [tim] account, have to change function to check_user_by_password() from crud since their passwords aren't hashed
 
     if user:
         flash("Welcome back! Happy meditating :)")
@@ -73,21 +90,23 @@ def register_user():
 
 @app.route("/profile")
 def profile():
-    """Renders profile page if a user logged in and displays if they've meditated the day before"""
+    """Renders profile page if a user is logged in and displays if they've meditated the day before"""
 
-    user = crud.get_user_by_id(session['user_id'])
+    fortune = random.choice(FORTUNES)
 
+    user = crud.get_user_by_id(session["user_id"])
+    
     if 'user_id' not in session:
         return redirect("/login")
 
     show_streak = crud.on_streak(session['user_id'])
 
     if show_streak == True:
-        streak = ["🔥 Great job, you're on a streak! Remember to meditate tomorrow 😌"]
+        streak = "🔥 Great job, you're on a streak! Remember to meditate tomorrow 😌"
     else:
-        streak = ["It's okay to miss a day. Remember to meditate tomorrow 😌"]
+        streak = "It's okay to miss a day. Remember to meditate tomorrow 😌"
 
-    return render_template("profile.html", streak=streak, user=user)
+    return render_template("profile.html", streak=streak, user=user, fortune=fortune)
 
 @app.route("/profile/<user_id>", methods=('GET', 'POST'))
 def profile_page(user_id):
@@ -129,8 +148,6 @@ def start_meditation():
     session['meditation_id'] = meditation.meditation_id
 
     return {'meditation_id' : meditation.meditation_id}
-
-    ##TODO: what is another way i can add meditation to session without printing meditation_id info to page?
 
 @app.route("/journal")
 def journal_entries():
@@ -181,7 +198,48 @@ def delete_account(user_id):
 
     return redirect ("/")
 
+# //////////////////////////////////////////////////////////////////////////
+
+@app.route('/sign_in')
+def index():
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
+
+    # Step 1. Display sign in link when no token
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        auth_url = auth_manager.get_authorize_url()
+        return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+
+    # Step 3. Signed in with token => display data
+    if auth_manager.validate_token(cache_handler.get_cached_token()):
+        spotify = spotipy.Spotify(auth_manager=auth_manager)
+        return f'<h2><a href="/profile">Hi {spotify.me()["display_name"]}, you are logged in. Click here to be taken back to the profile page</a></h2>'
+
+# Step 2. Being redirected from Spotify auth page
+@app.route('/redirect')
+def redirectPage():
+
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
+    session.clear()
+    code = request.args.get('code')
+    token_info = auth_manager.get_access_token(code)
+
+    if token_info:
+        session[TOKEN_INFO] = token_info
+    else:
+        token_info = auth_manager.refresh_access_token(code) 
+        session[TOKEN_INFO] = token_info 
+
+    return redirect("/login")
+
+@app.route('/sign_out')
+def sign_out():
+    session.pop("token_info", None)
+
+    return redirect('/profile')
+
 if __name__ == "__main__":
     connect_to_db(app, "meditations")
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True, threaded=True)
 

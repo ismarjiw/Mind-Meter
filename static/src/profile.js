@@ -113,7 +113,7 @@ var player1, player2, player3, player4;
     function onYouTubeIframeAPIReady() {
 
     var ctrlq1 = document.getElementById("youtube-audio1");
-    ctrlq1.innerHTML = '<img id="youtube-icon1" src=""/><div id="youtube-player1"></div>';
+    ctrlq1.innerHTML = '<img id="youtube-icon1"><div id="youtube-player1"></div>';
     ctrlq1.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
     ctrlq1.onclick = toggleAudio1;
 
@@ -132,7 +132,7 @@ var player1, player2, player3, player4;
     });
 
     var ctrlq2 = document.getElementById("youtube-audio2");
-    ctrlq2.innerHTML = '<img id="youtube-icon2" src=""/><div id="youtube-player2"></div>';
+    ctrlq2.innerHTML = '<img id="youtube-icon2"><div id="youtube-player2"></div>';
     ctrlq2.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
     ctrlq2.onclick = toggleAudio2;
 
@@ -151,7 +151,7 @@ var player1, player2, player3, player4;
     });
 
     var ctrlq3 = document.getElementById("youtube-audio3");
-    ctrlq3.innerHTML = '<img id="youtube-icon3" src=""/><div id="youtube-player3"></div>';
+    ctrlq3.innerHTML = '<img id="youtube-icon3"><div id="youtube-player3"></div>';
     ctrlq3.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
     ctrlq3.onclick = toggleAudio3;
 
@@ -170,7 +170,7 @@ var player1, player2, player3, player4;
     });
 
     var ctrlq4 = document.getElementById("youtube-audio4");
-    ctrlq4.innerHTML = '<img id="youtube-icon4" src=""/><div id="youtube-player4"></div>';
+    ctrlq4.innerHTML = '<img id="youtube-icon4"><div id="youtube-player4"></div>';
     ctrlq4.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
     ctrlq4.onclick = toggleAudio4;
 

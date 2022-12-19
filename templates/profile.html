@@ -12,40 +12,51 @@
 
 <section id="timer">
 
-    <label for="timer">Select how long you would like to meditate in minutes:</label>
+    <label for="timer" id="select">Select how long you would like to meditate in minutes:</label>
     <button id='five' type="button" value=5 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">5</button>
     <button id='ten' type="button" value=10 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">10</button>
 
-    <div id= "timer-result"> </div>
+    <div id="timer-result"></div>
 
 </section>
 
-<!-- <div style="color:white" id="meditation-data"></div> -->
+<!-- focused breathing gif  -->
+<script type="text/javascript">
+    // Popup window code
+    function newPopup(url) {
+        popupWindow = window.open(
+            url,'popUpWindow','height=600,width=600,left=10,top=10,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
+    }
+</script>
+<a href="JavaScript:newPopup('https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523');"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></a>
 
-{% for streak in streak %}
-<div id="streak ">{{ streak }}</div>
-{% endfor %}
 
-<a href="/profile/{{session['user_id']}}">Click here to write a reflection to add to your meditation journal</a>
+
+<div id="streak">{{ streak }}</div>
+<span>Daily Fortune:</span>
+<div id="fortune">{{ fortune }}</div>
+
 <div>
-    <a href="/journal">Click here to see all journal entries</a>
+    <a href="/profile/{{session['user_id']}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to write a reflection to add to your meditation journal</a>  
+</div>
+<div>
+    <a href="/journal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to see all journal entries</a>
 </div>
 
 
+<!-- delete account button -->
 <button onclick="deleteAccount('{{ user.user_id }}')" type="button" class="delete text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete Account</button>    
-
-
 <script>
-    
     function deleteAccount(user_id) {
         fetch(`/delete-account/${user_id}`) 
             .then((response) => {
                 window.location = '/';
         });
     };
-
 </script>
 
+
+<!-- meditation bar graph -->
 <div id="site-content" style="width:600px;height:250px">
     <h2>Bar Chart w/ Time Scale</h2>
     <canvas id="line-time"></canvas>
@@ -87,6 +98,7 @@
 });
 </script>
 
+
 <!-- youtube sound buttons -->
 <div style="display:flex;justify-content:center;align-items:center;">
     <div style="width:400px;height:300px;">
@@ -98,6 +110,40 @@
         </div>
     </div>
 </div>
+
+
+<!-- spotify signin/signout links -->
+<a href="/sign_in" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign In</a>
+<a href="/sign_out" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Log Out</a>
+
+
+<!-- spotify playlist player -->
+<div style="width: 500px;" id="music"></div>
+<script>
+const music = document.getElementById("music");
+// tells you what today's date is
+const d = new Date(); 
+// gives the day of the week as a number (0-6) i.e. sunday = 0
+let day = d.getDay();
+
+function changeSong(url) {
+    fetch(`https://open.spotify.com/oembed?url=${url}`)
+        .then((response) => response.json())
+        .then((data) => {
+        console.log(data);
+        music.innerHTML = data.html;
+        });
+    };
+
+if (day == 0 || day == 2) {
+    changeSong('https://open.spotify.com/playlist/37i9dQZF1DX9uKNf5jGX6m');
+} else if (day == 1 || day == 3 || day == 5) {
+    changeSong('https://open.spotify.com/playlist/37i9dQZF1DWURfu7Lk3xJ1');
+} else {
+    changeSong('https://open.spotify.com/playlist/37i9dQZF1DWTiAxGU5Bgem');
+};
+</script>
+
 
 <script src="/static/src/profile.js"></script>
 {% endblock %}

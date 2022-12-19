@@ -1,2 +1,4 @@
 env
 *.pyc
+secrets.sh
+.flask_session/
