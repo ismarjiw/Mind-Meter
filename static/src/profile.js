@@ -33,7 +33,7 @@ five.addEventListener('click', function () {
         countdown(5, 0);
 });
 
-function startMeditation(evt) {
+function startMeditation5(evt) {
     evt.preventDefault();
     const length = document.getElementById('five').value;
 
@@ -50,7 +50,7 @@ function startMeditation(evt) {
         meditationId = responseJson['meditation_id'];
     });
 };
-document.getElementById('five').addEventListener('click', startMeditation);
+document.getElementById('five').addEventListener('click', startMeditation5);
 
 
 const ten = document.getElementById('ten')
@@ -80,7 +80,7 @@ ten.addEventListener('click', function () {
         countdown(10, 0);
 });
 
-function startMeditation(evt) {
+function startMeditation10(evt) {
     evt.preventDefault();
     const length = document.getElementById('ten').value;
 
@@ -97,7 +97,8 @@ function startMeditation(evt) {
         meditationId = responseJson['meditation_id']; 
     });
 };
-document.getElementById('ten').addEventListener('click', startMeditation);
+
+document.getElementById('ten').addEventListener('click', startMeditation10);
 /////////////////////////////////////////////////////
 
 // This code loads the IFrame Player API code asynchronously.

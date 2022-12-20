@@ -91,13 +91,13 @@ def register_user():
 @app.route("/profile")
 def profile():
     """Renders profile page if a user is logged in and displays if they've meditated the day before"""
+    
+    if 'user_id' not in session:
+        return redirect("/login")
 
     fortune = random.choice(FORTUNES)
 
     user = crud.get_user_by_id(session["user_id"])
-    
-    if 'user_id' not in session:
-        return redirect("/login")
 
     show_streak = crud.on_streak(session['user_id'])
 
@@ -213,7 +213,7 @@ def index():
     # Step 3. Signed in with token => display data
     if auth_manager.validate_token(cache_handler.get_cached_token()):
         spotify = spotipy.Spotify(auth_manager=auth_manager)
-        return f'<h2><a href="/profile">Hi {spotify.me()["display_name"]}, you are logged in. Click here to be taken back to the profile page</a></h2>'
+        return f'<h2><a href="/profile">Hi {spotify.me()["display_name"]}, you are already logged in. Click here to be taken back to the profile page</a></h2>'
 
 # Step 2. Being redirected from Spotify auth page
 @app.route('/redirect')
@@ -221,7 +221,7 @@ def redirectPage():
 
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
-    session.clear()
+    # session.clear()
     code = request.args.get('code')
     token_info = auth_manager.get_access_token(code)
 
@@ -231,8 +231,8 @@ def redirectPage():
         token_info = auth_manager.refresh_access_token(code) 
         session[TOKEN_INFO] = token_info 
 
-    return redirect("/login")
-
+    return redirect("/profile")
+    
 @app.route('/sign_out')
 def sign_out():
     session.pop("token_info", None)

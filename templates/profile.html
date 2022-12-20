@@ -2,10 +2,12 @@
 {% block title %} Profile Page {% endblock %}
 
 {% block head %}
+
 {# ChartJS #}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js"></script>
+
 {% endblock %}
 
 {% block body %}
@@ -31,16 +33,17 @@
 <a href="JavaScript:newPopup('https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523');"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></a>
 
 
-
+<!-- tells user if they meditated ystdy and today or not -->
 <div id="streak">{{ streak }}</div>
-<span>Daily Fortune:</span>
+<!-- random fortune appears after log in -->
 <div id="fortune">{{ fortune }}</div>
 
+
 <div>
-    <a href="/profile/{{session['user_id']}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to write a reflection to add to your meditation journal</a>  
+    <a href="/profile/{{session['user_id']}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to write a reflection</a>  
 </div>
 <div>
-    <a href="/journal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to see all journal entries</a>
+    <a href="/journal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to see all of your journal entries</a>
 </div>
 
 
@@ -58,7 +61,6 @@
 
 <!-- meditation bar graph -->
 <div id="site-content" style="width:600px;height:250px">
-    <h2>Bar Chart w/ Time Scale</h2>
     <canvas id="line-time"></canvas>
 </div>
 
@@ -100,21 +102,17 @@
 
 
 <!-- youtube sound buttons -->
-<div style="display:flex;justify-content:center;align-items:center;">
-    <div style="width:400px;height:300px;">
+<div style="display:flex;justify-content:center;align-items:center; height: 300px;">
         <div data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
         <div data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
         <div data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
         <div data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
-        <div style="clear:both;margin:10px;text-align:center">
-        </div>
-    </div>
 </div>
 
 
 <!-- spotify signin/signout links -->
 <a href="/sign_in" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign In</a>
-<a href="/sign_out" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Log Out</a>
+<a href="/sign_out" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign Out</a>   
 
 
 <!-- spotify playlist player -->
