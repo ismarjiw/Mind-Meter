@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body %}
+<img src="{{ profile_picture }}" style="width:100px;height:100px;">
 
 <section id="timer">
 
@@ -37,7 +38,6 @@
 <div id="streak">{{ streak }}</div>
 <!-- random fortune appears after log in -->
 <div id="fortune">{{ fortune }}</div>
-
 
 <div>
     <a href="/profile/{{session['user_id']}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to write a reflection</a>  

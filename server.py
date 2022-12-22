@@ -1,6 +1,9 @@
 import os 
-from flask import (Flask, render_template, request, flash, session, redirect, jsonify, json)
+import pathlib 
+
+from flask import (Flask, render_template, request, flash, abort, session, redirect, jsonify, json)
 from flask_session import Session
+import requests 
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
@@ -10,6 +13,10 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import random
 from random import choice
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
 
 app = Flask(__name__)
 app.secret_key = "hackbright"
@@ -27,6 +34,16 @@ FORTUNES = [
     "Speak good things about yourself into existence",
     "Let the difference between where you are and where you want to be inspire you",
 ]
+
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file = client_secrets_file,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+    redirect_uri = "http://127.0.0.1:5000/callback",
+)
 
 @app.route('/')
 def homepage():
@@ -48,7 +65,6 @@ def user_login_page():
     email = request.form.get("email")
 
     user = crud.check_hash_account(email, password)
-    ## if want to access [toast] or [tim] account, have to change function to check_user_by_password() from crud since their passwords aren't hashed
 
     if user:
         flash("Welcome back! Happy meditating :)")
@@ -58,6 +74,61 @@ def user_login_page():
     else:
         flash("Incorrect email or password. Please try to login again.")
         return redirect("/login")
+
+@app.route('/google_login_button')
+def google_login_button():
+    """Login button for a Google user"""
+
+    return "<a href='/google_login'><button>Login</button></a>"
+
+@app.route('/google_login')
+def google_login():
+    """Initiates Google Oauth flow and returns auth url"""
+
+    authorization_url, state = flow.authorization_url(
+        access_type = 'offline', 
+        include_granted_scopes = 'true',
+        )
+
+    return redirect(authorization_url)
+
+@app.route("/callback")
+def callback():
+    """Returns auth response"""
+    
+    flow.fetch_token(authorization_response = request.url)
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token = credentials._id_token,
+        request = token_request,
+        audience = GOOGLE_CLIENT_ID
+    )
+
+    google_id = id_info.get("sub")
+    email = id_info.get("email")
+    picture = id_info.get("picture")
+
+    google_user = crud.check_google_user(email)
+    if google_user:
+        flash("Welcome back! Happy meditating :)")
+        session["email"] = email
+        session["picture"] = picture
+        session["user_id"] = google_user.user_id
+        return redirect("/profile")
+    else:
+        user = crud.create_google_user(google_id, email, picture)
+        db.session.add(user)
+        db.session.commit()
+        session["email"] = email
+        session["picture"] = picture
+        session["user_id"] = user.user_id
+        flash('Account created! Happy meditating :)')
+        return redirect("/profile")
 
 @app.route("/logout")
 def logout():
@@ -101,12 +172,14 @@ def profile():
 
     show_streak = crud.on_streak(session['user_id'])
 
+    profile_picture = user.picture
+
     if show_streak == True:
         streak = "🔥 Great job, you're on a streak! Remember to meditate tomorrow 😌"
     else:
         streak = "It's okay to miss a day. Remember to meditate tomorrow 😌"
 
-    return render_template("profile.html", streak=streak, user=user, fortune=fortune)
+    return render_template("profile.html", streak=streak, user=user, fortune=fortune, profile_picture=profile_picture)
 
 @app.route("/profile/<user_id>", methods=('GET', 'POST'))
 def profile_page(user_id):

@@ -14,18 +14,20 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
 
+    google_id = db.Column(db.String, nullable=True)
+    picture = db.Column(db.String, nullable=True)
+
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
 
     meditations = db.relationship("Meditation", back_populates="users")
     reflections = db.relationship("Reflection", back_populates="users")
 
-    sounds = db.relationship("Sound", back_populates="users")
-    songplays = db.relationship("SongPlay", back_populates="users")
+    # sounds = db.relationship("Sound", back_populates="users")
+    # songplays = db.relationship("SongPlay", back_populates="users")
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email} password={self.password}>'
-
 
 class Meditation(db.Model):
     """A meditation session"""
@@ -39,6 +41,7 @@ class Meditation(db.Model):
     date = db.Column(db.DateTime)
 
     users = db.relationship("User", back_populates="meditations")
+
     reflection = db.relationship("Reflection", uselist=False, back_populates='meditation')
 
     def __repr__(self):
@@ -53,10 +56,12 @@ class Reflection(db.Model):
     meditation_id = db.Column(db.Integer, db.ForeignKey("meditations.meditation_id"), primary_key=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.Text, nullable=False)
     
     users = db.relationship("User", uselist=False,back_populates="reflections")
+
     meditation = db.relationship("Meditation", uselist=False, back_populates='reflection')
     tags = db.relationship("Tag", secondary='reflection_tags', back_populates="reflections")
 
@@ -72,7 +77,7 @@ class ReflectionTag(db.Model):
     reflection_tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     reflection_id = db.Column(db.Integer, db.ForeignKey("reflections.meditation_id"), nullable=False)
     tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"), nullable=False)
-    ### why don't my reflection_tag_ids increment?!
+    
     def __repr__(self):
         return f"<ReflectionTag reflection_id = {self.reflection_id} tag_id = {self.tag_id}>"
 
@@ -91,40 +96,39 @@ class Tag(db.Model):
         return f'{self.tag}'
         # return f'<Tag id={self.tag_id} tag={self.tag}>'
 
-class Sound(db.Model):
-    """A calming sound"""
+# class Sound(db.Model):
+#     """A calming sound"""
 
-    __tablename__ = 'sounds'
+#     __tablename__ = 'sounds'
 
-    sound_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     sound_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    url = db.Column(db.String)
-    name = db.Column(db.String)
+#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+#     url = db.Column(db.String)
+#     name = db.Column(db.String)
 
-    users = db.relationship("User", back_populates="sounds")
+#     users = db.relationship("User", back_populates="sounds")
 
-    def __repr__(self):
-        return f'<Sound sound_id={self.sound_id} name={self.name}>'
+#     def __repr__(self):
+#         return f'<Sound sound_id={self.sound_id} name={self.name}>'
 
 
-class SongPlay(db.Model):
-    """A song played by Spotify"""
+# class SongPlay(db.Model):
+#     """A song played by Spotify"""
 
-    __tablename__ = 'songplays'
+#     __tablename__ = 'songplays'
 
-    songplay_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     songplay_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    track_name = db.Column(db.String)
-    artist = db.Column(db.String)
-    url = db.Column(db.String)
+#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+#     track_name = db.Column(db.String)
+#     artist = db.Column(db.String)
+#     url = db.Column(db.String)
 
-    users = db.relationship("User", back_populates="songplays")
+#     users = db.relationship("User", back_populates="songplays")
 
-    def __repr__(self):
-        return f'<SongPlay songplay_id={self.songplay_id} track_name={self.track_name}>'
-
+#     def __repr__(self):
+#         return f'<SongPlay songplay_id={self.songplay_id} track_name={self.track_name}>'
 
 def connect_to_db(app, db_name):
     """Connect to database"""

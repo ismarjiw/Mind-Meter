@@ -1,4 +1,4 @@
-from model import db, User, Meditation, Reflection, Tag, Sound, SongPlay, connect_to_db
+from model import db, User, Meditation, Reflection, Tag, connect_to_db
 from flask import json
 from datetime import *
 from sqlalchemy import desc
@@ -11,6 +11,21 @@ def create_user(email, password):
     user = User(email=email, password=password)
 
     return user
+
+def create_google_user(google_id, email, picture):
+
+    google_user = User(google_id=google_id, email=email, picture=picture)
+
+    return google_user 
+
+def check_google_user(email):
+
+    google_user = User.query.filter(User.email == email).first()
+
+    if google_user:
+        return google_user
+    else:
+        return False
 
 def get_users():
     """Return all users"""
@@ -139,12 +154,12 @@ def get_tag_by_id(meditation_id):
 
     return Tag.query.filter_by(meditation_id=meditation_id).first()
 
-def create_sound(url, name):
-    """Create and return a sound"""
+# def create_sound(url, name):
+#     """Create and return a sound"""
 
-    sound = Sound(url=url, name=name)
+#     sound = Sound(url=url, name=name)
 
-    return sound
+#     return sound
 
 ### def for SongPlay if can connect to Spotify API
 
