@@ -172,7 +172,8 @@ def profile():
 
     show_streak = crud.on_streak(session['user_id'])
 
-    profile_picture = user.picture
+    if user.picture:
+        profile_picture = user.picture
 
     if show_streak == True:
         streak = "🔥 Great job, you're on a streak! Remember to meditate tomorrow 😌"
