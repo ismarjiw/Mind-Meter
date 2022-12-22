@@ -113,18 +113,18 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player1, player2, player3, player4;
     function onYouTubeIframeAPIReady() {
 
-    var ctrlq1 = document.getElementById("youtube-audio1");
-    ctrlq1.innerHTML = '<img id="youtube-icon1"><div id="youtube-player1"></div>';
-    ctrlq1.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
-    ctrlq1.onclick = toggleAudio1;
+    var audio1 = document.getElementById("youtube-audio1");
+    audio1.innerHTML = '<img id="youtube-icon1" src=" "><div id="youtube-player1"></div>';
+    audio1.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
+    audio1.onclick = toggleAudio1;
 
     player1 = new YT.Player('youtube-player1', {
         height: '0',
         width: '0',
-        videoId: ctrlq1.dataset.video,
+        videoId: audio1.dataset.video,
         playerVars: {
-        autoplay: ctrlq1.dataset.autoplay,
-        loop: ctrlq1.dataset.loop,
+        autoplay: audio1.dataset.autoplay,
+        loop: audio1.dataset.loop,
         },
         events: {
         'onReady': onPlayerReady1,
@@ -132,18 +132,18 @@ var player1, player2, player3, player4;
         } 
     });
 
-    var ctrlq2 = document.getElementById("youtube-audio2");
-    ctrlq2.innerHTML = '<img id="youtube-icon2"><div id="youtube-player2"></div>';
-    ctrlq2.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
-    ctrlq2.onclick = toggleAudio2;
+    var audio2 = document.getElementById("youtube-audio2");
+    audio2.innerHTML = '<img id="youtube-icon2" src=" "><div id="youtube-player2"></div>';
+    audio2.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
+    audio2.onclick = toggleAudio2;
 
     player2 = new YT.Player('youtube-player2', {
         height: '0',
         width: '0',
-        videoId: ctrlq2.dataset.video,
+        videoId: audio2.dataset.video,
         playerVars: {
-        autoplay: ctrlq2.dataset.autoplay,
-        loop: ctrlq2.dataset.loop,
+        autoplay: audio2.dataset.autoplay,
+        loop: audio2.dataset.loop,
         },
         events: {
         'onReady': onPlayerReady2,
@@ -151,18 +151,18 @@ var player1, player2, player3, player4;
         } 
     });
 
-    var ctrlq3 = document.getElementById("youtube-audio3");
-    ctrlq3.innerHTML = '<img id="youtube-icon3"><div id="youtube-player3"></div>';
-    ctrlq3.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
-    ctrlq3.onclick = toggleAudio3;
+    var audio3 = document.getElementById("youtube-audio3");
+    audio3.innerHTML = '<img id="youtube-icon3" src=" "><div id="youtube-player3"></div>';
+    audio3.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
+    audio3.onclick = toggleAudio3;
 
     player3 = new YT.Player('youtube-player3', {
         height: '0',
         width: '0',
-        videoId: ctrlq3.dataset.video,
+        videoId: audio3.dataset.video,
         playerVars: {
-        autoplay: ctrlq3.dataset.autoplay,
-        loop: ctrlq3.dataset.loop,
+        autoplay: audio3.dataset.autoplay,
+        loop: audio3.dataset.loop,
         },
         events: {
         'onReady': onPlayerReady3,
@@ -170,18 +170,18 @@ var player1, player2, player3, player4;
         } 
     });
 
-    var ctrlq4 = document.getElementById("youtube-audio4");
-    ctrlq4.innerHTML = '<img id="youtube-icon4"><div id="youtube-player4"></div>';
-    ctrlq4.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
-    ctrlq4.onclick = toggleAudio4;
+    var audio4 = document.getElementById("youtube-audio4");
+    audio4.innerHTML = '<img id="youtube-icon4" src=" "><div id="youtube-player4"></div>';
+    audio4.style.cssText = 'width:150px;margin:2em auto;cursor:pointer;cursor:hand;display:none';
+    audio4.onclick = toggleAudio4;
 
     player4 = new YT.Player('youtube-player4', {
         height: '0',
         width: '0',
-        videoId: ctrlq4.dataset.video,
+        videoId: audio4.dataset.video,
         playerVars: {
-        autoplay: ctrlq4.dataset.autoplay,
-        loop: ctrlq4.dataset.loop,
+        autoplay: audio4.dataset.autoplay,
+        loop: audio4.dataset.loop,
         },
         events: {
         'onReady': onPlayerReady4,
@@ -190,8 +190,16 @@ var player1, player2, player3, player4;
     });
     } 
 // Toggles the play buttons and audio 
+
+// -1 (unstarted)
+// 0 (ended)
+// 1 (playing)
+// 2 (paused)
+// 3 (buffering)
+// 5 (video cued)
+
     function togglePlayButton1(play) {    
-    document.getElementById("youtube-icon1").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
+    document.getElementById("youtube-icon1").src = play ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2sw7fRjad2wdwqimJPt6pt_8OgVx6KPTL5oCXOuNpmA&s" : "https://cdn-icons-png.flaticon.com/512/0/375.png";
     }
 
     function toggleAudio1() {
@@ -205,7 +213,7 @@ var player1, player2, player3, player4;
     } 
 
     function togglePlayButton2(play) {    
-    document.getElementById("youtube-icon2").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
+    document.getElementById("youtube-icon2").src = play ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2sw7fRjad2wdwqimJPt6pt_8OgVx6KPTL5oCXOuNpmA&s" : "https://cdn-icons-png.flaticon.com/512/0/375.png";
     }
 
     function toggleAudio2() {
@@ -219,7 +227,7 @@ var player1, player2, player3, player4;
     } 
 
     function togglePlayButton3(play) {    
-    document.getElementById("youtube-icon3").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
+    document.getElementById("youtube-icon3").src = play ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2sw7fRjad2wdwqimJPt6pt_8OgVx6KPTL5oCXOuNpmA&s" : "https://cdn-icons-png.flaticon.com/512/0/375.png";
     }
 
     function toggleAudio3() {
@@ -233,7 +241,7 @@ var player1, player2, player3, player4;
     } 
 
     function togglePlayButton4(play) {    
-    document.getElementById("youtube-icon4").src = play ? "https://i.imgur.com/IDzX9gL.png" : "https://i.imgur.com/quyUPXN.png";
+    document.getElementById("youtube-icon4").src = play ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2sw7fRjad2wdwqimJPt6pt_8OgVx6KPTL5oCXOuNpmA&s" : "https://cdn-icons-png.flaticon.com/512/0/375.png";
     }
 
     function toggleAudio4() {

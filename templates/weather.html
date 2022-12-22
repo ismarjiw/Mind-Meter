@@ -1,0 +1,56 @@
+{% extends 'logout.html' %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block head %}
+<style>
+    table {
+    font-family: sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+    background-color: white;
+    }
+
+    #weather {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<table>
+    <tr>
+        <th>Temperature</th>
+        <th>Weather</th>
+    </tr>
+        <tr>
+            <td>{{ data["main"]["temp"]  }} °F</td>
+            {% for item in data["weather"] %}
+            <td><div id="weather"><img src="/static/src/icons/{{ item["description"] }}.png"></img>{{ item["description"] }}</div></td>
+            {% endfor %}
+        </tr>
+</table>
+
+{% if data["main"]["temp"] > 60 and data["main"]["temp"] < 80 %}
+<h2>Today is a great day to go for a walk! :)</h2>
+{% else %}
+<h2>The weather isn't super great to go for a walk right now but maybe try doing a home workout or yoga instead :)</h2> 
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock footer %}

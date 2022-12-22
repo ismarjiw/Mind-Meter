@@ -8,6 +8,11 @@
 <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js"></script>
 
+<style>
+    #weather {
+        padding: 50px;
+    }
+</style>
 {% endblock %}
 
 {% block body %}
@@ -35,7 +40,7 @@
 <a href="JavaScript:newPopup('https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523');"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></a>
 
 
-<!-- tells user if they meditated ystdy and today or not -->
+<!-- tells user if they meditated yesterday and today or not -->
 <div id="streak">{{ streak }}</div>
 <!-- random fortune appears after log in -->
 <div id="fortune">{{ fortune }}</div>
@@ -101,6 +106,17 @@
 });
 </script>
 
+<!-- displays the temp and weather for given zipcode -->
+<div id="weather">
+<h2>Good day to go for a walk?</h2>
+    <form action="/weather" method="GET">
+      <p>
+        Type in your zipcode to see what the weather is like right now: <input type="text" name="zip">
+      </p>
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+      </p>
+    </form>    
+</div>
 
 <!-- youtube sound buttons -->
 <div style="display:flex;justify-content:center;align-items:center; height: 300px;">

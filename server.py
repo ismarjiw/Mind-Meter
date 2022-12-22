@@ -1,7 +1,8 @@
 import os 
 import pathlib 
+import urllib
 
-from flask import (Flask, render_template, request, flash, abort, session, redirect, jsonify, json)
+from flask import (Flask, render_template, request, flash, abort, session, redirect, Response, jsonify, json)
 from flask_session import Session
 import requests 
 from model import connect_to_db, db
@@ -34,6 +35,8 @@ FORTUNES = [
     "Speak good things about yourself into existence",
     "Let the difference between where you are and where you want to be inspire you",
 ]
+
+OPEN_WEATHER_API_KEY = os.environ.get('OPEN_WEATHER_API_KEY')
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
@@ -75,15 +78,9 @@ def user_login_page():
         flash("Incorrect email or password. Please try to login again.")
         return redirect("/login")
 
-@app.route('/google_login_button')
-def google_login_button():
-    """Login button for a Google user"""
-
-    return "<a href='/google_login'><button>Login</button></a>"
-
 @app.route('/google_login')
 def google_login():
-    """Initiates Google Oauth flow and returns auth url"""
+    """Initiates Google Oauth2 flow and returns auth url"""
 
     authorization_url, state = flow.authorization_url(
         access_type = 'offline', 
@@ -94,7 +91,7 @@ def google_login():
 
 @app.route("/callback")
 def callback():
-    """Returns auth response"""
+    """Returns auth response and logs in new or current Google user"""
     
     flow.fetch_token(authorization_response = request.url)
 
@@ -162,9 +159,11 @@ def register_user():
 @app.route("/profile")
 def profile():
     """Renders profile page if a user is logged in and displays if they've meditated the day before"""
-    
+
     if 'user_id' not in session:
         return redirect("/login")
+    # if 'meditation_id' not in session:
+    #     return redirect("/login")
 
     fortune = random.choice(FORTUNES)
 
@@ -244,7 +243,7 @@ def meditation_log():
     for date, total in med_data.items():
         meditations_this_week.append({ 'date': date.isoformat(), 'length': total })
 
-    return jsonify({'data':meditations_this_week})
+    return jsonify({'data': meditations_this_week})
 
 @app.route('/delete-reflection/<meditation_id>')
 def delete_reflection(meditation_id):
@@ -271,6 +270,29 @@ def delete_account(user_id):
         flash('Unable to delete account.')
 
     return redirect ("/")
+
+@app.route('/weather', methods=['GET'])
+def get_weather():
+
+    zipcode = request.args.get('zip')
+
+    if not zipcode:
+        abort(400, 'Missing argument zipcode')
+
+    data = {}
+    data['zip'] = request.args.get('zip')
+    data['appid'] = OPEN_WEATHER_API_KEY
+    data['units'] = 'imperial'
+
+    url_values = urllib.parse.urlencode(data)
+    url = 'http://api.openweathermap.org/data/2.5/weather'
+    full_url = url + '?' + url_values
+    data = urllib.request.urlopen(full_url)
+
+    resp = Response(data)
+    resp.status_code = 200
+
+    return render_template('weather.html', title='Weather Info', data = json.loads(data.read().decode('utf8')))
 
 # //////////////////////////////////////////////////////////////////////////
 
