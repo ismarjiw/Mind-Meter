@@ -1,39 +1,88 @@
 {% extends 'base.html' %}
 {% block title %} Login Page {% endblock %}
 
+{% block head %} 
+<style>
+  main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 40vh;
+        align-items: center;
+        justify-content: center;
+        margin-left: 30rem;
+        margin-right: 15rem;
+    }
+    /* #dde4ec */
+  #register {
+    background-color: #e9eaf4;
+    width: 31vh;
+    height: 40vh; 
+    padding: 2rem;
+    border-radius: 25px;
+  }
+  #login {
+    background-color: #e9eaf4;
+    width: 31vh;
+    height: 40vh; 
+    padding: 2rem;
+    border-radius: 25px;
+  }
+  #google-login {
+    display: grid;
+    justify-content: center;
+  }
+  .signup-text-input {
+    border-radius: 20px;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
-
-
-  <h2>Create an Account</h2>
+<section id="image">
+    <img style="display: block; margin-left: 30rem; margin-right: 15rem; width: 50%;" src="../static/src/Photos/login.jpg"></img>    
+  </section> 
+<main>
+  <section id="register">
+  <b><h2>Create an Account</h2></b>
+  <h3>Welcome aboard! Please enter your details.</h3>
   <form action="/register" method="POST">
-    <p>
-      Email <input type="text" name="email">
+    <p style="padding-top: 1rem;">
+      <input class="signup-text-input" type="text" name="email" placeholder="email">
     </p>
-    <p>
-      Password <input type="password" name="password">
+    <p style="padding-top: 1rem;">
+      <input class="signup-text-input" type="password" name="password" placeholder="password">
     </p>
-    <p>
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <p style="padding-top: 1rem; margin-left: 4.25rem;">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
     </p>
   </form>
+</section>
 
-  <h2>Log In</h2>
+<section id="login">
+  <b><h2>Log In</h2></b>
+  <h3>Welcome back! Please enter your details.</h3>
   <form action="/login" method="POST">
-    <p>
-      Email <input type="text" name="email">
+    <p style="padding-top: 1rem;">
+      <input class="signup-text-input" type="text" name="email" placeholder="email">
     </p>
-    <p>
-      Password <input type="password" name="password">
+    <p style="padding-top: 1rem;">
+      <input class="signup-text-input" type="password" name="password" placeholder="password">
     </p>
-    <p>
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <p style="padding-top: 1rem; margin-left: 4.25rem;">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
     </p>
   </form>
+  <p style="display: flex; justify-content: center; padding-top:1rem;"><a href='/google_login'><button type="button" class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+  <svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
+  Sign in with Google
+</button></a></p>
+</section>
+</main>
 
-  <a href='/google_login'><button type="button" class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
-    <svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-    Sign in with Google
-  </button></a>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+<script>
+    gsap.from('#image', {opacity: 0, duration: 1.80, y: -50})
+    gsap.from('main', {duration: 1.80, y: 30, opacity: 0 })
+</script>
 
-  
 {% endblock %}

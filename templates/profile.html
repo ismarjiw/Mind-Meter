@@ -13,6 +13,14 @@
         padding: 50px;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+            $("#focus").slideToggle();
+        });
+    });
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -30,14 +38,8 @@
 </section>
 
 <!-- focused breathing gif  -->
-<script type="text/javascript">
-    // Popup window code
-    function newPopup(url) {
-        popupWindow = window.open(
-            url,'popUpWindow','height=600,width=600,left=10,top=10,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
-    }
-</script>
-<a href="JavaScript:newPopup('https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523');"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></a>
+<button><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></button>
+<img id="focus" style="display: none;" src="https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523"/>
 
 
 <!-- tells user if they meditated yesterday and today or not -->

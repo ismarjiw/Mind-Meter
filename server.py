@@ -20,7 +20,7 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 
 app = Flask(__name__)
-app.secret_key = "hackbright"
+# app.secret_key = "hackbright"
 app.jinja_env.undefined = StrictUndefined
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -29,11 +29,11 @@ Session(app)
 TOKEN_INFO = 'token_info'
 
 FORTUNES = [
-    "Start where you are. Use what you have. Do what you can",
-    "Putting yourself fully into what you do is a form of love",
-    "Do what you love. The rest will fall into place",
-    "Speak good things about yourself into existence",
-    "Let the difference between where you are and where you want to be inspire you",
+    "Start where you are. Use what you have. Do what you can.",
+    "Putting yourself fully into what you do is a form of love.",
+    "Do what you love. The rest will fall into place.",
+    "Speak good things about yourself into existence.",
+    "Let the difference between where you are and where you want to be inspire you.",
 ]
 
 OPEN_WEATHER_API_KEY = os.environ.get('OPEN_WEATHER_API_KEY')
@@ -158,28 +158,28 @@ def register_user():
 
 @app.route("/profile")
 def profile():
-    """Renders profile page if a user is logged in and displays if they've meditated the day before"""
+    """Renders profile page if a user is logged in"""
 
     if 'user_id' not in session:
         return redirect("/login")
-    # if 'meditation_id' not in session:
-    #     return redirect("/login")
-
-    fortune = random.choice(FORTUNES)
 
     user = crud.get_user_by_id(session["user_id"])
 
-    show_streak = crud.on_streak(session['user_id'])
-
     if user.picture:
         profile_picture = user.picture
+    else:
+        profile_picture = "../static/src/Photos/profile.png"
+
+    show_streak = crud.on_streak(session['user_id'])
+
+    fortune = random.choice(FORTUNES)
 
     if show_streak == True:
         streak = "🔥 Great job, you're on a streak! Remember to meditate tomorrow 😌"
     else:
         streak = "It's okay to miss a day. Remember to meditate tomorrow 😌"
 
-    return render_template("profile.html", streak=streak, user=user, fortune=fortune, profile_picture=profile_picture)
+    return render_template("profile.html", user=user, streak=streak, fortune=fortune, profile_picture=profile_picture)
 
 @app.route("/profile/<user_id>", methods=('GET', 'POST'))
 def profile_page(user_id):
@@ -334,6 +334,7 @@ def sign_out():
     session.pop("token_info", None)
 
     return redirect('/profile')
+
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")

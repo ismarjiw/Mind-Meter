@@ -2,17 +2,45 @@
 {% block title %} Mind Meter {% endblock %}
 
 {% block head %}
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/granim/2.0.0/granim.js"></script>  -->
+
+<style>
+    main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 70vh;
+        align-items: center;
+        justify-content: center;
+        margin-left: 8rem;
+    }
+    .meditate-img {
+        display:block; 
+    }
+    #img-side img {
+        width: 50rem;
+    }
+</style>
 
 {% endblock %}
 
 
 {% block body %}
 
-<h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-sky-600 from-violet-400">A better way to meditate</span></h1> 
-<p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Here at Mind Meter, we focus on helping to cultivate a safe space where anyone can keep track of their meditation history in a fun and exciting way, whether you're just getting started or have meditated for years.</p>
+<main>
+    <section id ="txt-side">
+        <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-sky-600 from-violet-400">A better way to meditate</span></h1> 
+        <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Here at Mind Meter, we focus on helping to cultivate a safe space where anyone can keep track of their meditation history in a fun and exciting way, whether you're just getting started or have meditated for years.</p>    
+    </section>
 
-<img src="../static/src/Photos/5184247.jpg"></img>
+    <section id="img-side">
+        <img class ="meditate-img" src="../static/src/Photos/5184247.jpg"></img>    
+    </section>    
+</main>
+
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+<script>
+    gsap.from('#txt-side', {opacity: 0, duration: 1.80, y: -50})
+    gsap.from('#img-side', {duration: 1.80, y: 30, opacity: 0 })
+</script>
 
 {% endblock %}
 
