@@ -27,11 +27,12 @@ five.addEventListener('click', function () {
                         }, 1000);
                     }
                 }
-            }
+            };
             tick();
-        }
+        };
         countdown(5, 0);
 });
+
 
 function startMeditation5(evt) {
     evt.preventDefault();
@@ -302,3 +303,4 @@ var player1, player2, player3, player4;
     }
     }
 /////////////////////////////////////////////////////
+

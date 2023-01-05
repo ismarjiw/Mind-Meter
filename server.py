@@ -208,6 +208,24 @@ def profile_page(user_id):
 
     return render_template('journal.html', user=user, users=users)
 
+@app.route("/reflection", methods=['POST'])
+def submit_reflection():
+
+    title = request.json.get("title")
+    content = request.json.get("content")
+    tag = request.json.get("tag")
+
+    tag = crud.create_tag(tag=tag)
+    db.session.add(tag)
+    db.session.commit()
+    reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
+    reflection.tags.append(tag)
+    db.session.add(reflection)
+    db.session.commit()
+    del session['meditation_id']
+
+    return {'reflection_id' : reflection.meditation_id}
+
 @app.route("/meditation", methods=['POST'])
 def start_meditation():
     """Establishes meditation session and adds it to the database"""

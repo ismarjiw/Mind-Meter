@@ -16,14 +16,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-        $("button").click(function(){
+        $("#breathe").click(function(){
             $("#focus").slideToggle();
         });
     });
-    </script>
+</script>
+<script>
+    $(document).ready(function(){
+        $("#write").click(function(){
+            $("#root").slideToggle();
+        });
+    });
+</script>
+
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 {% endblock %}
 
 {% block body %}
+
+<div style="display:none;" id="root"></div>
+<button id="write"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250611.png" style="width:42px;height:42px;"></button>
 
 <img src="{{ profile_picture }}" style="width:100px;height:100px;">
 
@@ -38,7 +52,7 @@
 </section>
 
 <!-- focused breathing gif  -->
-<button><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></button>
+<button id="breathe"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></button>
 <img id="focus" style="display: none;" src="https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523"/>
 
 
@@ -147,7 +161,7 @@ function changeSong(url) {
     fetch(`https://open.spotify.com/oembed?url=${url}`)
         .then((response) => response.json())
         .then((data) => {
-        console.log(data);
+        // console.log(data);
         music.innerHTML = data.html;
         });
     };
@@ -163,4 +177,5 @@ if (day == 0 || day == 2) {
 
 
 <script src="/static/src/profile.js"></script>
+<script type="text/jsx" src="/static/src/form.jsx">
 {% endblock %}
