@@ -215,16 +215,18 @@ def submit_reflection():
     content = request.json.get("content")
     tag = request.json.get("tag")
 
-    tag = crud.create_tag(tag=tag)
-    db.session.add(tag)
-    db.session.commit()
-    reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
-    reflection.tags.append(tag)
-    db.session.add(reflection)
-    db.session.commit()
-    del session['meditation_id']
-
-    return {'reflection_id' : reflection.meditation_id}
+    if 'meditation_id' in session:
+        tag = crud.create_tag(tag=tag)
+        db.session.add(tag)
+        db.session.commit()
+        reflection = crud.create_reflection(meditation_id=session['meditation_id'],user_id=session['user_id'], title=title, content=content)
+        reflection.tags.append(tag)
+        db.session.add(reflection)
+        db.session.commit()
+        del session['meditation_id']
+        return {"status": 'Your reflection is saved 😌'}
+    else:
+        return {"status": 'Meditate again first'}
 
 @app.route("/meditation", methods=['POST'])
 def start_meditation():
