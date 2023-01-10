@@ -1,27 +1,28 @@
 #timer-result {
-    color: red;
+    color: #b4a5c4;
     font-size: xxx-large;
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
+    display: flex; justify-content: center;
 }
 
 #select {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 500;
 }
 
 #streak {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 500;
 }
 
 #site-content {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 500;
 }
 
 #fortune {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 600;
     color: #b4a5c4
 }
@@ -39,7 +40,7 @@
 }
 
 .notes * {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .notes__preview {

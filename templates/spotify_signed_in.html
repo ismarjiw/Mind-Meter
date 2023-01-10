@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="/static/src/additional.css">
+
+    <style>
+        h2 {
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap'); </style>
+</head>
+<body>
+    <h2><a class="font-medium text-2xl text-blue-600 dark:text-blue-500 hover:underline" href="/profile">Hi {{ spotify.me()["display_name"] }}, you are already logged in. Click here to be taken back to the profile page</a></h2>
+
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+</body>
+</html>

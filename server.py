@@ -20,7 +20,6 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 
 app = Flask(__name__)
-# app.secret_key = "hackbright"
 app.jinja_env.undefined = StrictUndefined
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -70,7 +69,7 @@ def user_login_page():
     user = crud.check_hash_account(email, password)
 
     if user:
-        flash("Welcome back! Happy meditating :)")
+        flash("Welcome back! Happy meditating 🧘")
         session["email"] = email
         session["user_id"] = user.user_id
         return redirect("/profile")
@@ -110,12 +109,12 @@ def callback():
     email = id_info.get("email")
     picture = id_info.get("picture")
 
-    google_user = crud.check_google_user(email)
-    if google_user:
+    user = crud.check_google_user(email)
+    if user:
         flash("Welcome back! Happy meditating :)")
         session["email"] = email
         session["picture"] = picture
-        session["user_id"] = google_user.user_id
+        session["user_id"] = user.user_id
         return redirect("/profile")
     else:
         user = crud.create_google_user(google_id, email, picture)
@@ -318,18 +317,20 @@ def get_weather():
 
 @app.route('/sign_in')
 def index():
+
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
 
     # Step 1. Display sign in link when no token
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         auth_url = auth_manager.get_authorize_url()
-        return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+        # return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+        return render_template('spotify_sign_in.html', auth_url=auth_url)
 
     # Step 3. Signed in with token => display data
     if auth_manager.validate_token(cache_handler.get_cached_token()):
         spotify = spotipy.Spotify(auth_manager=auth_manager)
-        return f'<h2><a href="/profile">Hi {spotify.me()["display_name"]}, you are already logged in. Click here to be taken back to the profile page</a></h2>'
+        return render_template('spotify_signed_in.html', spotify=spotify)
 
 # Step 2. Being redirected from Spotify auth page
 @app.route('/redirect')
@@ -354,7 +355,6 @@ def sign_out():
     session.pop("token_info", None)
 
     return redirect('/profile')
-
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")

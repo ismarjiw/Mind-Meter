@@ -14,42 +14,75 @@
     }
     #timer {
         display: grid;
+        /* background-color: #eeeff6; */
+        border-color: #e9eaf4;
+        border-width: 3px;
         grid-template-columns: repeat(1, 1fr);
-        height: 40vh;
+        height: 300px;
         align-items: center;
         justify-content: center;
-        margin-left: 50rem;
-        margin-right: 50rem;
+        text-align: center;
+        margin-left: 500px;
+        margin-right: 500px;
+        border-radius: 25px;
+        padding: 2rem;
     }
     #timer-buttons {
-        display: grid;
-        height: 10vh;
-        align-items: center;
-        justify-content: space-around;
-        margin-left: auto;
-        margin-right: auto;
+        display: flex;
+        justify-content: space-evenly;
     }
     #welcome {
     display: grid;
-    background-color: #e9eaf4;
+    /* background-color: #e9eaf4; */
     width: 400px;
     height: 300px; 
     padding: 2rem;
     border-radius: 25px;
+    border-color: #e9eaf4;
+    border-width: 2px;
+    }
+    #breathe-section {
+        display: flex;
+        justify-content: center;
+        width: 500px;
+        height: 500px; 
+        padding: 2rem;
+        border-color: #e9eaf4;
+        border-width: 2px;
+        border-radius: 25px;
+    }
+    #journal-section {
+        display: grid;
+        /* background-color: #e9eaf4; */
+        width: 500px;
+        font-family: sans-serif;
+        font-size: large;
+        height: 500px; 
+        padding: 2rem;
+        border-radius: 25px;
+        border-color: #e9eaf4;
+        border-width: 2px;
+    }
+    #top-screen {
+        display: flex;
+        justify-content: space-evenly;
     }
     #wrapper {
         margin-left: auto;
         margin-right: auto;
-        width: 1800px;
+        width: 1400px;
         margin-top: 2rem;
     }
     #walk {
-    float: right;
-    margin-top: 2rem;
-    background-color: #e9eaf4;
-    width: 400px;
+    /* background-color: #e9eaf4; */
+    border-color: #e9eaf4;
+    border-width: 2px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    width: 450px;
     height: 300px; 
-    padding: 2rem;
     border-radius: 25px;
     }
     #site-content {
@@ -58,14 +91,20 @@
     }
     #youtube {
         padding: 2rem;
+        display: flex;
+        justify-content:center;
+        align-items:center; 
+        height: 350px;
     }
-    #graph {
+    #spotify, #delete, #graph {
         display: flex;
         justify-content: center;
+        font-family: 'Lato', sans-serif;
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
-    #spotify {
-        display: flex;
-        justify-content: center;
+    .hidden {
+        display: none;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -94,165 +133,159 @@
 {% block body %}
 <section id="wrapper">
 
-<section id="welcome">
-    <img src="{{ profile_picture }}" style="width:100px;height:100px; border-radius: 50%;">
-    <!-- tells user if they meditated yesterday and today or not -->
-    <div id="streak">{{ streak }}</div>
-    <!-- random fortune appears after log in -->
-    <div id="fortune">{{ fortune }}</div> 
-    
-</section>
-
-<section id="walk">
-    <div id="weather">
-        <h2>Good day to go for a walk?</h2>
-            <form action="/weather" method="GET">
-              <p>
-                Type in your zipcode to see what the weather is like right now: <input id="zip" type="text" name="zip">
-              </p>
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-              </p>
-            </form>    
-        </div>
-</section>
-
-
 <section id="timer">
-
-    <label for="timer" id="select">Select how long you would like to meditate in minutes:</label>
-    <button id='five' type="button" value=5 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">5</button>
-    <button id='ten' type="button" value=10 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">10</button>
-
-    <div style="display: flex; justify-content: center;" id="timer-result"></div>
-
-</section>
-
-<section id="timer-buttons">
-    <!-- focused breathing gif  -->
-    <button id="breathe"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:42px;height:42px;"></button>
-    <img id="focus" style="display: none;" src="https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523"/>
-    <!-- add reflection form -->
-    <button id="write"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250611.png" style="width:42px;height:42px;"></button>  
-    <div style="display:none;" id="root"></div>  
+    <label class="text-xl font-extrabold" for="timer" id="select">Select how long you would like to meditate in minutes:</label>
+    <button id='five' type="button" value=5 class="text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800">5</button>
+    <button id='ten' type="button" value=10 class="text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800">10</button>
+    <div id="timer-result"></div>
 </section>
 
 <section id="youtube">
 <!-- youtube sound buttons -->
-<div style="display:flex;justify-content:center;align-items:center; height: 300px;">
-        <div data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
-        <div data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
-        <div data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
-        <div data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
-</div>    
+    <div title="Rain" data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
+    <div title="Ethereal" data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
+    <div title="Ocean" data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
+    <div title="Piano" data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
 </section>
+
+<section id="timer-buttons">
+    <!-- focused breathing gif  -->
+    <section id="breathe-section">
+        <button id="breathe"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:80px;height:80px;"></button>
+        <img id="focus" class="hidden" src="https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523"/>
+    </section>
+    <section id="journal-section">
+        <div id="root"></div> 
+        <hr class="h-px my-4 bg-gray-100 border-0 dark:bg-gray-300">
+        <button onClick="location.href='/journal'" type="button" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Reflection Entries</button>
+        <!-- <button id="write"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250611.png" style="width:42px;height:42px;"></button>   -->
+    </section>
+</section>
+
+<section id="spotify">
+    <!-- spotify signin/signout links -->
+    <a href="/sign_in" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;"></a>
+    <!-- <a href="/sign_out" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign Out</a>    -->
+
+
+    <!-- spotify playlist player -->
+    <div style="width: 500px;" id="music"></div>
+    <script>
+    const music = document.getElementById("music");
+    // tells you what today's date is
+    const d = new Date(); 
+    // gives the day of the week as a number (0-6) i.e. sunday = 0
+    let day = d.getDay();
+
+    function changeSong(url) {
+        fetch(`https://open.spotify.com/oembed?url=${url}`)
+            .then((response) => response.json())
+            .then((data) => {
+            // console.log(data);
+            music.innerHTML = data.html;
+            });
+        };
+
+    if (day == 0 || day == 2) {
+        changeSong('https://open.spotify.com/playlist/37i9dQZF1DX9uKNf5jGX6m');
+    } else if (day == 1 || day == 3 || day == 5) {
+        changeSong('https://open.spotify.com/playlist/37i9dQZF1DWURfu7Lk3xJ1');
+    } else {
+        changeSong('https://open.spotify.com/playlist/37i9dQZF1DWTiAxGU5Bgem');
+    };
+    </script>    
+</section>
+
+<div id="top-screen">
+    <section id="welcome">
+        <img src="{{ profile_picture }}" style="width:100px;height:100px; border-radius: 50%;">
+        <!-- tells user if they meditated yesterday and today or not -->
+        <div id="streak" class="text-xl font-extrabold">{{ streak }}</div>
+        <!-- random fortune appears after log in -->
+        <div id="fortune" class="text-xl font-extrabold">{{ fortune }}</div> 
+    </section>
+
+    <section id="walk">
+        <div id="weather">
+            <h2 class="text-xl font-extrabold">Good day to go for a walk?</h2>
+                <form action="/weather" method="GET">
+                <p class="text-xl font-semibold leading-relaxed">
+                    Type in your zipcode to see what the weather is like right now: <input id="zip" type="text" name="zip">
+                </p>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go</button>
+                </form>    
+            </div>
+    </section>
+</div>
+
+
+
 <!-- <div>
     <a href="/profile/{{session['user_id']}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to write a reflection</a>  
 </div> -->
 <!-- <div>
     <a href="/journal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to see all of your journal entries</a>
 </div> -->
-<section id="spotify">
-<!-- spotify signin/signout links -->
-<a href="/sign_in" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign In</a>
-<a href="/sign_out" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign Out</a>   
-
-
-<!-- spotify playlist player -->
-<div style="width: 500px;" id="music"></div>
-<script>
-const music = document.getElementById("music");
-// tells you what today's date is
-const d = new Date(); 
-// gives the day of the week as a number (0-6) i.e. sunday = 0
-let day = d.getDay();
-
-function changeSong(url) {
-    fetch(`https://open.spotify.com/oembed?url=${url}`)
-        .then((response) => response.json())
-        .then((data) => {
-        // console.log(data);
-        music.innerHTML = data.html;
-        });
-    };
-
-if (day == 0 || day == 2) {
-    changeSong('https://open.spotify.com/playlist/37i9dQZF1DX9uKNf5jGX6m');
-} else if (day == 1 || day == 3 || day == 5) {
-    changeSong('https://open.spotify.com/playlist/37i9dQZF1DWURfu7Lk3xJ1');
-} else {
-    changeSong('https://open.spotify.com/playlist/37i9dQZF1DWTiAxGU5Bgem');
-};
-</script>    
-</section>
 
 
 
 <section id="graph">
-<!-- meditation bar graph -->
-<div id="site-content" style="width:600px;height:250px">
-    <canvas id="line-time"></canvas>
-</div>
+    <!-- meditation bar graph -->
+    <div id="site-content" style="width:600px;height:250px">
+        <canvas id="line-time"></canvas>
+    </div>
 
-<script>
-    fetch('/meditations_this_week.json')
-.then((response) => response.json())
-.then((responseJson) => {
-    const data = responseJson.data.map((dailyTotal) => ({
-    x: dailyTotal.date,
-    y: dailyTotal.length,
-    }));
+    <script>
+        fetch('/meditations_this_week.json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+        const data = responseJson.data.map((dailyTotal) => ({
+        x: dailyTotal.date,
+        y: dailyTotal.length,
+        }));
 
-    new Chart(document.querySelector('#line-time'), {
-    type: 'bar',
-    data: {
-        datasets: [
-        {
-            label: 'Minutes meditated',
-            data, // equivalent to data: data
-            borderColor: '#5D75BB',
-            backgroundColor: '#5D75BB',
+        new Chart(document.querySelector('#line-time'), {
+        type: 'bar',
+        data: {
+            datasets: [
+            {
+                label: 'Minutes meditated',
+                data, // equivalent to data: data
+                borderColor: '#5D75BB',
+                backgroundColor: '#5D75BB',
+            },
+            ],
         },
-        ],
-    },
-    options: {
-        scales: {
-        x: {
-            type: 'time',
-            time: {
-            tooltipFormat: 'LLLL dd', // Luxon format string
-            unit: 'day',
+        options: {
+            scales: {
+            x: {
+                type: 'time',
+                time: {
+                tooltipFormat: 'LLLL dd', // Luxon format string
+                unit: 'day',
+                },
+            },
             },
         },
-        },
-    },
-    });
-});
-</script>    
-</section>
-<!-- delete account button -->
-<button onclick="deleteAccount('{{ user.user_id }}')" type="button" style="display:flex; justify-content: center;"class="delete text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete Account</button>    
-<script>
-    function deleteAccount(user_id) {
-        fetch(`/delete-account/${user_id}`) 
-            .then((response) => {
-                window.location = '/';
         });
-    };
-</script>
-
+    });
+    </script>    
 </section>
 
-<!-- displays the temp and weather for given zipcode
-<div id="weather">
-<h2>Good day to go for a walk?</h2>
-    <form action="/weather" method="GET">
-      <p>
-        Type in your zipcode to see what the weather is like right now: <input id="zip" type="text" name="zip">
-      </p>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-      </p>
-    </form>    
-</div> -->
+<section id="delete">
+    <!-- delete account button -->
+    <button onclick="deleteAccount('{{ user.user_id }}')" type="button" style="display:flex; justify-content: center;"class="delete text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete Account</button>    
+    <script>
+        function deleteAccount(user_id) {
+            fetch(`/delete-account/${user_id}`) 
+                .then((response) => {
+                    window.location = '/';
+            });
+        };
+    </script>
+</section>
+
+</section>
 
 <script src="/static/src/profile.js"></script>
 <script type="text/jsx" src="/static/src/form.jsx">    
