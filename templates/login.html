@@ -6,27 +6,32 @@
   main {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        height: 40vh;
+        height: 400px;
         align-items: center;
-        justify-content: center;
-        margin-left: 30rem;
-        margin-right: 15rem;
+        justify-content: space-evenly;
+        margin-left: 500px;
+        margin-right: 500px;
     }
-    /* #dde4ec */
   #register {
-    background-color: #e9eaf4;
+    border-color: #e9eaf4;
+    border-width: 3px;
     font-family: 'Lato', sans-serif;
     width: 300px;
     height: 375px; 
     padding: 2rem;
+    margin-left: 30px;
+    margin-right: 30px;
     border-radius: 25px;
   }
   #login {
-    background-color: #e9eaf4;
+    border-color: #e9eaf4;
+    border-width: 3px;
     font-family: 'Lato', sans-serif;
     width: 300px;
     height: 375px; 
     padding: 2rem;
+    margin-left: 30px;
+    margin-right: 30px;
     border-radius: 25px;
   }
   #google-login {
@@ -36,17 +41,24 @@
   .signup-text-input {
     border-radius: 20px;
   }
+  #image {
+    display: flex; 
+    justify-content: center; 
+    align-content: center;
+    width: 50%;
+    margin: 0 auto;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
 <section id="image">
-    <img style="display: block; margin-left: 30rem; margin-right: 15rem; width: 50%;" src="../static/src/Photos/login.jpg"></img>    
+    <img src="../static/src/Photos/login.jpg"></img>    
   </section> 
 <main>
   <section id="register">
-  <b><h2>Create an Account</h2></b>
-  <h3>Welcome aboard! Please enter your details.</h3>
+  <b><h2 class="text-xl font-bold text-gray-900 dark:text-black">Create an Account</h2></b>
+  <h3>Welcome aboard 🚀</h3>
   <form action="/register" method="POST">
     <p style="padding-top: 1rem;">
       <input class="signup-text-input" type="text" name="email" placeholder="email">
@@ -55,14 +67,14 @@
       <input class="signup-text-input" type="password" name="password" placeholder="password">
     </p>
     <p style="padding-top: 1rem; margin-left: 4.25rem;">
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
+      <button type="submit" class="text-md text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Sign In</button>
     </p>
   </form>
 </section>
 
 <section id="login">
-  <b><h2>Log In</h2></b>
-  <h3>Welcome back! Please enter your details.</h3>
+  <b><h2 class="text-xl font-bold text-gray-900 dark:text-black">Log In</h2></b>
+  <h3>Welcome back 👋</h3>
   <form action="/login" method="POST">
     <p style="padding-top: 1rem;">
       <input class="signup-text-input" type="text" name="email" placeholder="email">
@@ -71,7 +83,7 @@
       <input class="signup-text-input" type="password" name="password" placeholder="password">
     </p>
     <p style="padding-top: 1rem; margin-left: 4.25rem;">
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
+      <button type="submit" class="text-md text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Sign In</button>
     </p>
   </form>
   <p style="display: flex; justify-content: center; padding-top:1rem;"><a href='/google_login'><button type="button" class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">

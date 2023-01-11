@@ -110,8 +110,9 @@ def callback():
     picture = id_info.get("picture")
 
     user = crud.check_google_user(email)
+
     if user:
-        flash("Welcome back! Happy meditating :)")
+        flash("Welcome back! Happy meditating 🧘")
         session["email"] = email
         session["picture"] = picture
         session["user_id"] = user.user_id
@@ -123,7 +124,7 @@ def callback():
         session["email"] = email
         session["picture"] = picture
         session["user_id"] = user.user_id
-        flash('Account created! Happy meditating :)')
+        flash('Account created! Happy meditating 🧘')
         return redirect("/profile")
 
 @app.route("/logout")
@@ -149,7 +150,7 @@ def register_user():
         user = crud.create_hash_account(email, password)
         db.session.add(user)
         db.session.commit()
-        flash("Account created! Happy meditating :)")
+        flash("Account created! Happy meditating 🧘")
         session["email"] = email
         session["user_id"] = user.user_id
 
@@ -209,6 +210,7 @@ def profile_page(user_id):
 
 @app.route("/reflection", methods=['POST'])
 def submit_reflection():
+    """Route for adding journal entry with React"""
 
     title = request.json.get("title")
     content = request.json.get("content")
@@ -292,6 +294,7 @@ def delete_account(user_id):
 
 @app.route('/weather', methods=['GET'])
 def get_weather():
+    """API call to OpenWeather that tells user temp/weather for given zipcode"""
 
     zipcode = request.args.get('zip')
 
@@ -317,6 +320,7 @@ def get_weather():
 
 @app.route('/sign_in')
 def index():
+    """Initiates sign in to Spotify app"""
 
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
@@ -324,7 +328,6 @@ def index():
     # Step 1. Display sign in link when no token
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         auth_url = auth_manager.get_authorize_url()
-        # return f'<h2><a href="{auth_url}">Sign in</a></h2>'
         return render_template('spotify_sign_in.html', auth_url=auth_url)
 
     # Step 3. Signed in with token => display data
@@ -335,6 +338,7 @@ def index():
 # Step 2. Being redirected from Spotify auth page
 @app.route('/redirect')
 def redirectPage():
+    """Handles redirect for Spotify API request"""
 
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
@@ -352,6 +356,8 @@ def redirectPage():
     
 @app.route('/sign_out')
 def sign_out():
+    """Signs user out of Spotify session"""
+
     session.pop("token_info", None)
 
     return redirect('/profile')

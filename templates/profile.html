@@ -106,6 +106,17 @@
     .hidden {
         display: none;
     }
+    .swal-button {
+    padding: 7px 19px;
+    border-radius: 2px;
+    background-color: #94bbe9;
+    font-size: 12px;
+    border: 1px solid #94bbe9;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    }
+    .swal-overlay {
+    background-color: rgba(148, 187, 233, 0.45);
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
@@ -135,8 +146,8 @@
 
 <section id="timer">
     <label class="text-xl font-extrabold" for="timer" id="select">Select how long you would like to meditate in minutes:</label>
-    <button id='five' type="button" value=5 class="text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800">5</button>
-    <button id='ten' type="button" value=10 class="text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800">10</button>
+    <button id='five' type="button" value=5 class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">5</button>
+    <button id='ten' type="button" value=10 class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">10</button>
     <div id="timer-result"></div>
 </section>
 
@@ -157,7 +168,7 @@
     <section id="journal-section">
         <div id="root"></div> 
         <hr class="h-px my-4 bg-gray-100 border-0 dark:bg-gray-300">
-        <button onClick="location.href='/journal'" type="button" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Reflection Entries</button>
+        <button onClick="location.href='/journal'" type="button" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Reflection Entries</button>
         <!-- <button id="write"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250611.png" style="width:42px;height:42px;"></button>   -->
     </section>
 </section>
@@ -212,7 +223,7 @@
                 <p class="text-xl font-semibold leading-relaxed">
                     Type in your zipcode to see what the weather is like right now: <input id="zip" type="text" name="zip">
                 </p>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go</button>
+                    <button type="submit" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Go</button>
                 </form>    
             </div>
     </section>
@@ -274,7 +285,7 @@
 
 <section id="delete">
     <!-- delete account button -->
-    <button onclick="deleteAccount('{{ user.user_id }}')" type="button" style="display:flex; justify-content: center;"class="delete text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete Account</button>    
+    <button onclick="deleteAccount('{{ user.user_id }}')" type="button" style="display:flex; justify-content: center;" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delete Account</button>    
     <script>
         function deleteAccount(user_id) {
             fetch(`/delete-account/${user_id}`) 

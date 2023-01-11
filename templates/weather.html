@@ -27,30 +27,71 @@
     h2 {
         font-family: 'Lato', sans-serif;
     }
+    #weather-table {
+        width: 1000px;
+        margin-top: 50px;
+        margin-left: 50px;
+    }
+    #to-walk {
+        margin-top: 50px;
+        margin-left: 50px;
+    }
+    #weather-content {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        margin-top: 50px;
+    }
+    #walk-img, #yoga-img {
+        width: 900px;
+        margin-top: 50px;
+        margin-left: 50px;
+        margin-bottom: 50px;
+    }
 </style>
 {% endblock %}
 
 
 {% block body %}
-
-<table>
-    <tr>
-        <th>Temperature</th>
-        <th>Weather</th>
-    </tr>
+<section id="weather-content">
+<div id="weather-table" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<table class="w-full text-md text-left text-blue-100 dark:text-blue-100">
+    <thead class="text-lg text-white uppercase bg-blue-500 border-b border-blue-400 dark:text-white">
         <tr>
-            <td>{{ data["main"]["temp"]  }} °F</td>
+            <th scope="col" class="px-6 py-3">Temperature</th>
+            <th scope="col" class="px-6 py-3">Weather</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="bg-blue-500 border-b border-blue-400 hover:bg-blue-400">
+            <th scope="row" class="px-6 py-4 text-lg font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">{{ data["main"]["temp"]  }} °F</th>
             {% for item in data["weather"] %}
-            <td><div id="weather"><img src="/static/src/icons/{{ item["description"] }}.png"></img>{{ item["description"] }}</div></td>
+            <td class="px-6 py-4 text-lg"><div id="weather"><img src="/static/src/icons/{{ item["description"] }}.png"></img>{{ item["description"] }}</div></td>
             {% endfor %}
         </tr>
+    </tbody>
 </table>
+</div>
 
+<div id="to-walk">
 {% if data["main"]["temp"] > 40 and data["main"]["temp"] < 80 %}
-<h2>Today is a great day to go for a walk! :)</h2>
+<h2 class="text-3xl font-semibold text-blue-400">Today is a great day to go for a walk 😎</h2>
+<div id="walk-img">
+    <img src="../static/src/Photos/walking.jpg"></img> 
+</div>
 {% else %}
-<h2>The weather isn't super great to go for a walk right now but maybe try doing a home workout or yoga instead :)</h2> 
+<h2 class="text-3xl font-semibold text-blue-400">Not very walking weather but maybe try a home workout instead 🏋️</h2>
+<div id="yoga-img">
+    <img src="../static/src/Photos/yoga.jpg"></img> 
+</div> 
 {% endif %}
+</div>   
+
+
+</section>
+
+
 
 {% endblock %}
 
