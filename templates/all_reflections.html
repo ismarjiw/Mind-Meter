@@ -45,6 +45,7 @@
         align-content: center;
         margin-top: 100px;
         margin-right: 60px;
+        margin-bottom: 50px;
     }
 </style>
 {% endblock %}
@@ -52,14 +53,15 @@
 {% block body %}
 
 <div class="reflections">
-<!-- {# for reflection in reflections #} -->
 {% for reflection in pagination.items %}
     <div class="reflection">
             <p class="text-4xl font-semibold text-gray-900 dark:text-black">{{ reflection.title }}</p>
         <div class="content">
             <p class="text-lg text-gray-500 font-extralight dark:text-gray">{{ reflection.content }}</p>
             <div class="tag">
-                <p class="text-md text-gray-600/75 font-extralight dark:text-gray">{{ reflection.tags }} </p>
+                {% for tag in reflection.tags %}
+                <p class="text-md text-gray-500/75 font-extralight dark:text-gray">#{{ tag }}</p>
+                {% endfor %}
             </div>
             <hr class="h-px my-3 bg-gray-200 border-0 dark:bg-gray-300">
             <i><p id="date-time" class="text-md text-gray-500 font-extralight dark:text-gray">{{ reflection.meditation.date.strftime('%m-%d-%Y @ %I:%M:%S %p') }}</p></i>
@@ -113,7 +115,8 @@
     function onClickDelete(meditation_id) {
         fetch(`/delete-reflection/${meditation_id}`) 
             .then((response) => {
-                window.location = '/journal';
+                window.location = '{{ request.referrer }}'; 
+                // # previously /journal #
         });
     };
 </script>

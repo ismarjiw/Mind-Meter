@@ -175,10 +175,10 @@
 
 <section id="youtube">
 <!-- youtube sound buttons -->
-    <div title="Rain" data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
-    <div title="Ethereal" data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
-    <div title="Ocean" data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
-    <div title="Piano" data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
+    <div class="b1" title="Rain" data-video="42M3esYyHdw" data-autoplay="0" data-loop="1" id="youtube-audio1"></div>
+    <div class="b2" title="Ethereal" data-video="fBVJoIbNjdQ" data-autoplay="0" data-loop="1" id="youtube-audio2"></div>
+    <div class="b3" title="Ocean" data-video="LTmXmskEMas" data-autoplay="0" data-loop="1" id="youtube-audio3"></div>
+    <div class="b4" title="Piano" data-video="6cDiJCM-6KA" data-autoplay="0" data-loop="1" id="youtube-audio4"></div>
 </section>
 
 <section id="timer-buttons">
@@ -320,7 +320,12 @@
 
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
 <script>
-    gsap.from('', {opacity: 0, duration: 1.00, y: -50});
+    gsap.from('#timer', {opacity: 0, duration: 3.00, y: -50});
+    gsap.from('#timer-buttons', {opacity: 0, duration: 3.00, y: -50});
+    gsap.from('.b1', {opacity: 0, duration: 15.00, y: -50});
+    gsap.from('.b2', {opacity: 0, duration: 15.00, y: -50});
+    gsap.from('.b3', {opacity: 0, duration: 15.00, y: -50});
+    gsap.from('.b4', {opacity: 0, duration: 15.00, y: -50});
 </script>
 
 <script src="/static/src/profile.js"></script>

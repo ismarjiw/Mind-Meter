@@ -243,7 +243,7 @@ def start_meditation():
 
     return {'meditation_id' : meditation.meditation_id}
 
-@app.route("/journal/")
+@app.route("/journal")
 def journal_entries():
     """Return all journal entries associated to specific user"""
 
@@ -256,7 +256,7 @@ def journal_entries():
     pagination = reflections.paginate(
         page, per_page=4)
 
-    return render_template("all_reflections.html", reflections=reflections, pagination=pagination)
+    return render_template("all_reflections.html", pagination=pagination)
 
 @app.route('/meditations_this_week.json')
 def meditation_log():
