@@ -23,11 +23,9 @@ class User(db.Model):
     meditations = db.relationship("Meditation", back_populates="users")
     reflections = db.relationship("Reflection", back_populates="users")
 
-    # sounds = db.relationship("Sound", back_populates="users")
-    # songplays = db.relationship("SongPlay", back_populates="users")
-
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email} password={self.password}>'
+
 
 class Meditation(db.Model):
     """A meditation session"""
@@ -69,6 +67,7 @@ class Reflection(db.Model):
     def __repr__(self):
         return f'<Reflection id={self.meditation_id} title={self.title}>'
 
+
 class ReflectionTag(db.Model):
     """Tag of a specific reflection"""
 
@@ -80,6 +79,7 @@ class ReflectionTag(db.Model):
     
     def __repr__(self):
         return f"<ReflectionTag reflection_id = {self.reflection_id} tag_id = {self.tag_id}>"
+
 
 class Tag(db.Model):
     """A journal tag"""
@@ -93,42 +93,8 @@ class Tag(db.Model):
     reflections = db.relationship("Reflection", secondary='reflection_tags', back_populates="tags")
 
     def __repr__(self):
-        return f'{self.tag}'
-        # return f'<Tag id={self.tag_id} tag={self.tag}>'
+        return f"{self.tag}"
 
-# class Sound(db.Model):
-#     """A calming sound"""
-
-#     __tablename__ = 'sounds'
-
-#     sound_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-
-#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#     url = db.Column(db.String)
-#     name = db.Column(db.String)
-
-#     users = db.relationship("User", back_populates="sounds")
-
-#     def __repr__(self):
-#         return f'<Sound sound_id={self.sound_id} name={self.name}>'
-
-
-# class SongPlay(db.Model):
-#     """A song played by Spotify"""
-
-#     __tablename__ = 'songplays'
-
-#     songplay_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-
-#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#     track_name = db.Column(db.String)
-#     artist = db.Column(db.String)
-#     url = db.Column(db.String)
-
-#     users = db.relationship("User", back_populates="songplays")
-
-#     def __repr__(self):
-#         return f'<SongPlay songplay_id={self.songplay_id} track_name={self.track_name}>'
 
 def connect_to_db(app, db_name):
     """Connect to database"""

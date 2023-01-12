@@ -8,7 +8,7 @@
     border-width: 2px;
     font-family: 'Lato', sans-serif;
     width: 350px;
-    height: 250px; 
+    height: auto; 
     border-radius: 25px;
     padding: 1rem;
     margin-top: 50px;
@@ -16,40 +16,111 @@
 }
     .reflections {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 2fr);
+    justify-content: center;
+    margin-left: 300px;
+    }
+    .content {
+    margin-top: 15px;
+    }
+    .tag {
+    border-radius: 10px;
+    background-color: #e9eaf4;
+    border-color: #e9eaf4;
+    border-width: 2px;
+    width: 125px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-shadow: 5px 5px #cccee3;
+    }
+    #date-time {
+        margin-bottom: 10px;
+    }
+    #pagination {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin-top: 100px;
+        margin-right: 60px;
     }
 </style>
 {% endblock %}
 
 {% block body %}
+
 <div class="reflections">
-{% for reflection in reflections %}
+<!-- {# for reflection in reflections #} -->
+{% for reflection in pagination.items %}
     <div class="reflection">
-        <p><b></b></p>
-            <p class="title">{{ reflection.title }}</p>
+            <p class="text-4xl font-semibold text-gray-900 dark:text-black">{{ reflection.title }}</p>
         <div class="content">
-            <b><h4></h4></b>
-            <p>{{ reflection.content }}</p>
-            <i><p>{{ reflection.meditation.date.strftime('%m-%d-%Y @ %I:%M:%S') }}</p></i>
+            <p class="text-lg text-gray-500 font-extralight dark:text-gray">{{ reflection.content }}</p>
             <div class="tag">
-                <b><h3></h3></b>
-                <p>{{ reflection.tags }} </p>
+                <p class="text-md text-gray-600/75 font-extralight dark:text-gray">{{ reflection.tags }} </p>
             </div>
-            <button onclick="onClickDelete( '{{reflection.meditation_id}}' )" type="button" class="text-md text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delete</button>
+            <hr class="h-px my-3 bg-gray-200 border-0 dark:bg-gray-300">
+            <i><p id="date-time" class="text-md text-gray-500 font-extralight dark:text-gray">{{ reflection.meditation.date.strftime('%m-%d-%Y @ %I:%M:%S %p') }}</p></i>
+            <button onclick="onClickDelete( '{{ reflection.meditation_id }}' )" type="button" class="text-md text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Delete</button>
         </div>
     </div>
+{% endfor %} 
+</div>
 
-{% endfor %}
+<div id="pagination">
+    <nav aria-label="Pagination">
+        <ul class="inline-flex items-center -space-x-px">
+            {% if pagination.has_prev %}
+            <li>
+                <a href="/journal?page={{ pagination.prev_num }}" class="block px-3 py-2 ml-0 leading-tight text-black-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-white-800 dark:border-gray-400 dark:text-black-400 dark:hover:bg-gray-200 dark:hover:text-black">
+                    <span class="sr-only">Previous</span>
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                </a>
+            </li>
+            {% endif %}
+            {% for number in pagination.iter_pages() %}
+            {% if number != None %}
+                {% if pagination.page != number %}
+            <li>
+                <a href="/journal?page={{ number }}" class="px-3 py-2 leading-tight text-black-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-200 dark:bg-white-800 dark:border-gray-400 dark:text-black-400 dark:hover:bg-gray-200 dark:hover:text-black">{{ number }}</a>
+            </li>
+                {% else %} 
+            <li>
+                <a href="/journal?page={{ number }}" class="z-10 px-3 py-2 leading-tight text-blue-700 border border-blue-200 bg-blue-100 hover:bg-blue-200 hover:text-blue-700 dark:border-blue-700 dark:bg-white-700 dark:text-blue-600">{{ number }}</a>
+            </li>
+                {% endif %}
+            {% elif number == None %}
+            <li>
+                <a href="/journal?page={{ number }}" class="px-3 py-2 leading-tight text-black-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-200 dark:bg-white-800 dark:border-gray-400 dark:text-black-400 dark:hover:bg-gray-200 dark:hover:text-black">...</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+            {% if pagination.has_next %}
+            <li>
+                <a href="/journal?page={{ pagination.next_num }}" class="block px-3 py-2 leading-tight text-black-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-white-800 dark:border-gray-400 dark:text-black-400 dark:hover:bg-gray-200 dark:hover:text-black">
+                    <span class="sr-only">Next</span>
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
 </div>   
 
 <script>
-    
     function onClickDelete(meditation_id) {
         fetch(`/delete-reflection/${meditation_id}`) 
             .then((response) => {
                 window.location = '/journal';
         });
     };
-
 </script>
+
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+<script>
+    gsap.from('.reflection', {opacity: 0, duration: 1.00, y: -50});
+</script>
+
 {% endblock %}

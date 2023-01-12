@@ -154,14 +154,6 @@ def get_tag_by_id(meditation_id):
 
     return Tag.query.filter_by(meditation_id=meditation_id).first()
 
-# def create_sound(url, name):
-#     """Create and return a sound"""
-
-#     sound = Sound(url=url, name=name)
-
-#     return sound
-
-### def for SongPlay if can connect to Spotify API
 
 if __name__ == '__main__':
     from server import app

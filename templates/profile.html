@@ -14,7 +14,6 @@
     }
     #timer {
         display: grid;
-        /* background-color: #eeeff6; */
         border-color: #e9eaf4;
         border-width: 3px;
         grid-template-columns: repeat(1, 1fr);
@@ -33,13 +32,13 @@
     }
     #welcome {
     display: grid;
-    /* background-color: #e9eaf4; */
     width: 400px;
     height: 300px; 
     padding: 2rem;
     border-radius: 25px;
     border-color: #e9eaf4;
     border-width: 2px;
+    margin-top: 10px;
     }
     #breathe-section {
         display: flex;
@@ -53,7 +52,6 @@
     }
     #journal-section {
         display: grid;
-        /* background-color: #e9eaf4; */
         width: 500px;
         font-family: sans-serif;
         font-size: large;
@@ -74,7 +72,6 @@
         margin-top: 2rem;
     }
     #walk {
-    /* background-color: #e9eaf4; */
     border-color: #e9eaf4;
     border-width: 2px;
     justify-content: center;
@@ -116,6 +113,31 @@
     }
     .swal-overlay {
     background-color: rgba(148, 187, 233, 0.45);
+    }
+    #spotify-section {
+    display: flex;
+    padding: 50px;
+    justify-content: space-evenly;
+    }
+    #spotify-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato', sans-serif;
+    padding: 1rem;
+    margin: 100px;
+    border-radius: 25px;
+    border-color: #e9eaf4;
+    border-width: 2px;
+    }
+    #spotify-player {
+    width: 550px;
+    }
+    #go {
+        margin-top: 20px;
+    }
+    #walk-zip {
+        margin-top: 5px;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -165,6 +187,7 @@
         <button id="breathe"><img src="https://www.svgrepo.com/show/235510/wind.svg" style="width:80px;height:80px;"></button>
         <img id="focus" class="hidden" src="https://media.discordapp.net/attachments/825978934046359627/1051933067993948230/breathing2.gif?width=523&height=523"/>
     </section>
+
     <section id="journal-section">
         <div id="root"></div> 
         <hr class="h-px my-4 bg-gray-100 border-0 dark:bg-gray-300">
@@ -173,39 +196,43 @@
     </section>
 </section>
 
-<section id="spotify">
-    <!-- spotify signin/signout links -->
-    <a href="/sign_in" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;"></a>
-    <!-- <a href="/sign_out" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/232px-Spotify_icon.svg.png" style="width:42px;height:42px;">Spotify Sign Out</a>    -->
+<div id="spotify-section">
 
+    <section id="spotify-button">
+        <!-- spotify signin/signout links -->
+        <h2><button id="button" onclick="location.href='/sign_in'" type="button" class="text-white bg-[#1DB954] hover:bg-[#1DB954]/90 focus:ring-4 focus:outline-none focus:ring-[#1DB954]/50 font-medium rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1DB954]/55 mr-2 mb-2"><svg class="w-4 h-4 mr-2 -ml-1" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="spotify" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.5 167.5"><path fill="currentColor" d="M83.7 0C37.5 0 0 37.5 0 83.7c0 46.3 37.5 83.7 83.7 83.7 46.3 0 83.7-37.5 83.7-83.7S130 0 83.7 0zM122 120.8c-1.4 2.5-4.6 3.2-7 1.7-19.8-12-44.5-14.7-73.7-8-2.8.5-5.6-1.2-6.2-4-.2-2.8 1.5-5.6 4-6.2 32-7.3 59.6-4.2 81.6 9.3 2.6 1.5 3.4 4.7 1.8 7.2zM132.5 98c-2 3-6 4-9 2.2-22.5-14-56.8-18-83.4-9.8-3.2 1-7-1-8-4.3s1-7 4.6-8c30.4-9 68.2-4.5 94 11 3 2 4 6 2 9zm1-23.8c-27-16-71.6-17.5-97.4-9.7-4 1.3-8.2-1-9.5-5.2-1.3-4 1-8.5 5.2-9.8 29.6-9 78.8-7.2 109.8 11.2 3.7 2.2 5 7 2.7 10.7-2 3.8-7 5-10.6 2.8z"></path></svg>Sign in with Spotify</button></h2>
+    </section>
 
+    <section id="spotify-player">
     <!-- spotify playlist player -->
-    <div style="width: 500px;" id="music"></div>
-    <script>
-    const music = document.getElementById("music");
-    // tells you what today's date is
-    const d = new Date(); 
-    // gives the day of the week as a number (0-6) i.e. sunday = 0
-    let day = d.getDay();
+        <div id="music"></div>
+        <script>
+        const music = document.getElementById("music");
+        // tells you what today's date is
+        const d = new Date(); 
+        // gives the day of the week as a number (0-6) i.e. sunday = 0
+        let day = d.getDay();
 
-    function changeSong(url) {
-        fetch(`https://open.spotify.com/oembed?url=${url}`)
-            .then((response) => response.json())
-            .then((data) => {
-            // console.log(data);
-            music.innerHTML = data.html;
-            });
+        function changeSong(url) {
+            fetch(`https://open.spotify.com/oembed?url=${url}`)
+                .then((response) => response.json())
+                .then((data) => {
+                // console.log(data);
+                music.innerHTML = data.html;
+                });
+            };
+
+        if (day == 0 || day == 2) {
+            changeSong('https://open.spotify.com/playlist/37i9dQZF1DX9uKNf5jGX6m');
+        } else if (day == 1 || day == 3 || day == 5) {
+            changeSong('https://open.spotify.com/playlist/37i9dQZF1DWURfu7Lk3xJ1');
+        } else {
+            changeSong('https://open.spotify.com/playlist/37i9dQZF1DWTiAxGU5Bgem');
         };
+        </script>     
+    </section>
 
-    if (day == 0 || day == 2) {
-        changeSong('https://open.spotify.com/playlist/37i9dQZF1DX9uKNf5jGX6m');
-    } else if (day == 1 || day == 3 || day == 5) {
-        changeSong('https://open.spotify.com/playlist/37i9dQZF1DWURfu7Lk3xJ1');
-    } else {
-        changeSong('https://open.spotify.com/playlist/37i9dQZF1DWTiAxGU5Bgem');
-    };
-    </script>    
-</section>
+</div>
 
 <div id="top-screen">
     <section id="welcome">
@@ -218,27 +245,20 @@
 
     <section id="walk">
         <div id="weather">
-            <h2 class="text-xl font-extrabold">Good day to go for a walk?</h2>
+            <h2 id="walk-zip" class="text-xl font-extrabold">Good day to go for a walk?</h2>
                 <form action="/weather" method="GET">
-                <p class="text-xl font-semibold leading-relaxed">
+                <p id="walk-zip" class="text-lg text-gray-500 font-extralight dark:text-gray">
                     Type in your zipcode to see what the weather is like right now: <input id="zip" type="text" name="zip">
                 </p>
-                    <button type="submit" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Go</button>
+                    <button id="go" type="submit" class="text-lg text-white bg-gradient-to-br from-purple-300 to-blue-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Go</button>
                 </form>    
             </div>
     </section>
 </div>
 
-
-
 <!-- <div>
     <a href="/profile/{{session['user_id']}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to write a reflection</a>  
 </div> -->
-<!-- <div>
-    <a href="/journal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Click here to see all of your journal entries</a>
-</div> -->
-
-
 
 <section id="graph">
     <!-- meditation bar graph -->
@@ -297,6 +317,11 @@
 </section>
 
 </section>
+
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+<script>
+    gsap.from('', {opacity: 0, duration: 1.00, y: -50});
+</script>
 
 <script src="/static/src/profile.js"></script>
 <script type="text/jsx" src="/static/src/form.jsx">    
