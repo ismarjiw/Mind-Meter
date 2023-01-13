@@ -74,7 +74,7 @@ def user_login_page():
         session["user_id"] = user.user_id
         return redirect("/profile")
     else:
-        flash("Incorrect email or password. Please try to login again.")
+        flash("Incorrect email or password. Please try again.")
         return redirect("/login")
 
 @app.route('/google_login')
@@ -116,7 +116,6 @@ def callback():
         session["email"] = email
         session["picture"] = picture
         session["user_id"] = user.user_id
-        return redirect("/profile")
     else:
         user = crud.create_google_user(google_id, email, picture)
         db.session.add(user)
@@ -125,7 +124,8 @@ def callback():
         session["picture"] = picture
         session["user_id"] = user.user_id
         flash('Account created! Happy meditating 🧘')
-        return redirect("/profile")
+
+    return redirect("/profile")
 
 @app.route("/logout")
 def logout():
@@ -153,7 +153,6 @@ def register_user():
         flash("Account created! Happy meditating 🧘")
         session["email"] = email
         session["user_id"] = user.user_id
-
         return redirect("/profile")
 
 @app.route("/profile")
