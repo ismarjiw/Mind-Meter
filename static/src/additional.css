@@ -1,7 +1,7 @@
 #timer-result {
     color: #b4a5c4;
     font-size: xxx-large;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Bakbak One', cursive;
     font-weight: bold;
     display: flex; justify-content: center;
 }
@@ -9,6 +9,7 @@
 #select {
     font-family: 'Lato', sans-serif;
     font-weight: 500;
+    margin-bottom: 10px;
 }
 
 #streak {
