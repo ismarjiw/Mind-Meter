@@ -111,12 +111,38 @@
     </nav>
 </div>   
 
-<script>
+<!-- <script>
     function onClickDelete(meditation_id) {
         fetch(`/delete-reflection/${meditation_id}`) 
             .then((response) => {
-                window.location = '{{ request.referrer }}'; 
+                window.location.reload();
+                // window.location = '{{ request.referrer }}'; 
                 // # previously /journal #
+        });
+    };
+</script> -->
+
+<script>
+    function onClickDelete(meditation_id) {
+        swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this reflection!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            swal("Poof 🪄 Your reflection has been deleted!", {
+            icon: "success",
+            });
+            fetch(`/delete-reflection/${meditation_id}`) 
+                .then((response) => {
+                    window.location.reload();
+            });
+        } else {
+            swal("Your reflection is safe! 😮‍💨");
+        }
         });
     };
 </script>

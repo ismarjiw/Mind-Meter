@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block head %}
+<style>
+    #error-404 {
+        text-align: center;
+        margin-top: 300px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <div id="error-404">
+        <h1 class="text-3xl">Looks like you either aren't logged in or don't have an account yet</h1>
+        <a href="/login" class="text-3xl font-medium text-blue-600 dark:text-blue-500 hover:underline"><p>⏩ Let's fix that ⏪</p></a> 
+    </div>
+{% endblock %}
