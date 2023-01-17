@@ -164,6 +164,7 @@ def profile():
         return redirect("/login")
 
     user = crud.get_user_by_id(session["user_id"])
+    
     if user == None:
         return render_template('404.html'), 404
     if user.picture:

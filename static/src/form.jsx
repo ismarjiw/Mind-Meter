@@ -23,13 +23,22 @@ function WriteReflection() {
       if (responseJson.status == 'Meditate again first') {
         swal("Oh Noes!", responseJson.status, "error");
       } else if (responseJson.status == 'Your reflection is saved 😌') {
-        swal ("Aww yiss!", responseJson.status, "success")
+        makeConfetti();
+        swal ("Aww yiss!", responseJson.status, "success");
       }
       data = responseJson['reflection_id'];
     });
     setTitle('');
     setContent('');
     setTag('');
+    };
+
+    function makeConfetti() {
+      confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+      });    
     };
 
     return (
