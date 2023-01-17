@@ -37,7 +37,7 @@ FORTUNES = [
 
 OPEN_WEATHER_API_KEY = os.environ.get('OPEN_WEATHER_API_KEY')
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+# os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
 
@@ -371,5 +371,6 @@ def sign_out():
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")
-    app.run(host="0.0.0.0", debug=True, threaded=True)
+    app.run()
+    # removed debug mode=True, host="0.0.0.0", and threaded=True
 

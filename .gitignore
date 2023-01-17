@@ -2,5 +2,6 @@ env
 *.pyc
 secrets.sh
 .flask_session/
-secrets.sh
 client_secret.json
+meditations.sql
+nginx.conf
