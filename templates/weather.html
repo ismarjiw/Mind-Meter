@@ -75,22 +75,24 @@
 </div>
 
 <div id="to-walk">
-{% if data["main"]["temp"] > 40 and data["main"]["temp"] < 80 %}
-<h2 class="text-3xl font-semibold text-blue-400">Today is a great day to go for a walk 😎</h2>
-<div id="walk-img">
-    <img src="../static/src/Photos/walking.jpg"></img> 
-</div>
-{% else %}
-<h2 class="text-3xl font-semibold text-blue-400">Not very walking weather but maybe try a home workout instead 🏋️</h2>
-<div id="yoga-img">
-    <img src="../static/src/Photos/yoga.jpg"></img> 
-</div> 
-{% endif %}
-</div>   
-
+    {% for item in data["weather"] %}
+        {% if item["description"] != 'rain' or 'mist' %}
+            {% if data["main"]["temp"] > 40 and data["main"]["temp"] < 80 %}
+            <h2 class="text-3xl font-semibold text-blue-400">Today is a great day to go for a walk 😎</h2>
+            <div id="walk-img">
+                <img src="../static/src/Photos/walking.jpg"></img> 
+            </div>
+            {% endif %} 
+        {% else %}
+        <h2 class="text-3xl font-semibold text-blue-400">Looks like walking right now isn't in the cards. Maybe try a home workout instead 🏋️</h2>
+        <div id="yoga-img">
+            <img src="../static/src/Photos/yoga.jpg"></img> 
+        </div> 
+        {% endif %}
+    {% endfor %}
+</div>  
 
 </section>
-
 
 
 {% endblock %}

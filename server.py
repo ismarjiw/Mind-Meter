@@ -297,6 +297,7 @@ def delete_account(user_id):
         flash('Unable to delete account.')
 
     return redirect ("/")
+    # maybe redirect to 404 html instead ?
 
 @app.route('/weather', methods=['GET'])
 def get_weather():
