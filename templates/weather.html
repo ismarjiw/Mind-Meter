@@ -76,7 +76,7 @@
 
 <div id="to-walk">
     {% for item in data["weather"] %}
-        {% if item["description"] != 'rain' or 'mist' %}
+        {% if item["description"] != 'rain' or item["description"] != 'mist' %}
             {% if data["main"]["temp"] > 40 and data["main"]["temp"] < 80 %}
             <h2 class="text-3xl font-semibold text-blue-400">Today is a great day to go for a walk 😎</h2>
             <div id="walk-img">

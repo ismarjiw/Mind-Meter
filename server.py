@@ -331,7 +331,11 @@ def index():
     """Initiates sign in to Spotify app"""
 
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    print(cache_handler)
+    print('*'*50)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
+    print(auth_manager)
+    print('*'*50)
 
     # Step 1. Display sign in link when no token
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
@@ -376,6 +380,6 @@ def sign_out():
 
 if __name__ == "__main__":
     connect_to_db(app, "meditations")
-    app.run()
+    app.run(host="127.0.0.1" , port=5001)
     # removed debug mode=True, host="0.0.0.0", and threaded=True
 

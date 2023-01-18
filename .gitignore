@@ -4,4 +4,3 @@ secrets.sh
 .flask_session/
 client_secret.json
 meditations.sql
-nginx.conf
