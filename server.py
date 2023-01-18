@@ -91,7 +91,8 @@ def google_login():
 @app.route("/callback")
 def callback():
     """Returns auth response and logs in new or current Google user"""
-    
+    # http://127.0.0.1:5000/callback
+
     flow.fetch_token(authorization_response = request.url)
 
     credentials = flow.credentials
@@ -346,7 +347,9 @@ def index():
 @app.route('/redirect')
 def redirectPage():
     """Handles redirect for Spotify API request"""
-
+    # http://127.0.0.1:5000/redirect
+    # http://localhost:5000/redirect
+    
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
     # session.clear()
