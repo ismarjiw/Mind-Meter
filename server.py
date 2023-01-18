@@ -44,7 +44,7 @@ client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret
 flow = Flow.from_client_secrets_file(
     client_secrets_file = client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri = "http://127.0.0.1:5000/callback",
+    redirect_uri = "http://mind-meter.com/callback",
 )
 
 @app.route('/')
@@ -336,6 +336,8 @@ def index():
     # Step 1. Display sign in link when no token
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         auth_url = auth_manager.get_authorize_url()
+        print(auth_url)
+        print('*'*50)
         return render_template('spotify_sign_in.html', auth_url=auth_url)
 
     # Step 3. Signed in with token => display data
@@ -349,7 +351,7 @@ def redirectPage():
     """Handles redirect for Spotify API request"""
     # http://127.0.0.1:5000/redirect
     # http://localhost:5000/redirect
-    
+
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
     # session.clear()
