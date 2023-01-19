@@ -21,10 +21,10 @@ With Mind Meter, anyone can start their meditation journey!
 <img src="https://media0.giphy.com/media/3PL3YXsdGLH3BakNsO/giphy.gif?cid=790b7611492fda7080098c644be66c6434f35c5a9d163c79&rid=giphy.gif&ct=g">
 
 *login page*  
-<img src="https://media2.giphy.com/media/EeMfpcQM2w9Xba2ejb/giphy.gif?cid=790b76115daead39e6412adf06ca86df0423b88c5798dbf0&rid=giphy.gif&ct=g">
+<img src="https://media4.giphy.com/media/zemz4fbHCsPYt90nYJ/giphy.gif?cid=790b7611070aadc16075ad1c84996680621fcb6306b0e60a&rid=giphy.gif&ct=g">
 
 *profile page*  
-
+<img src="https://media4.giphy.com/media/GsyWuQAL3AUnrYqecs/giphy.gif?cid=790b76118e8f1ce67aabeeddea491f612d99f5c94344e72f&rid=giphy.gif&ct=g">
 
 ## Tech Stack
 - Python
@@ -41,7 +41,6 @@ With Mind Meter, anyone can start their meditation journey!
 - Flowbite
 - GSAP
 
-
 APIs:
 - [OpenWeather API](https://openweathermap.org/api)
 - [Youtube Player API](https://developers.google.com/youtube/iframe_api_reference)
@@ -55,7 +54,6 @@ APIs:
 
 ## Possible Future Features
 - ***---***:
-
 
 
 ## Known Bugs
