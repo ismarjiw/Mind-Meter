@@ -1,5 +1,5 @@
 # Mind Meter: A meditation app
-![Mind Meter header](https://imgur.com/a/E3qVe0f)
+![Mind Meter header](https://i.imgur.com/bQf1Iaw.png)
 
 Live link: [Try out Mind Meter](100.26.194.141)  
 
@@ -18,10 +18,10 @@ Mind Meter is a web app that helps users log timed meditation sessions, write jo
 With Mind Meter, anyone can start their meditation journey!
 
 *homepage*
-<div style="width:100%;height:0;padding-bottom:49%;position:relative;"><iframe src="https://giphy.com/embed/3PL3YXsdGLH3BakNsO" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/3PL3YXsdGLH3BakNsO">via GIPHY</a></p>
+<img src="https://media0.giphy.com/media/3PL3YXsdGLH3BakNsO/giphy.gif?cid=790b7611492fda7080098c644be66c6434f35c5a9d163c79&rid=giphy.gif&ct=g">
 
 *login page*  
-
+<img src="https://media2.giphy.com/media/EeMfpcQM2w9Xba2ejb/giphy.gif?cid=790b76115daead39e6412adf06ca86df0423b88c5798dbf0&rid=giphy.gif&ct=g">
 
 *profile page*  
 
