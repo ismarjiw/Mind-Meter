@@ -1,5 +1,3 @@
-# be mindful of changing redirect uri in secret files 
-
 import os 
 import pathlib 
 import urllib
@@ -93,7 +91,6 @@ def google_login():
 @app.route("/callback")
 def callback():
     """Returns auth response and logs in new or current Google user"""
-    # http://127.0.0.1:5000/callback
 
     flow.fetch_token(authorization_response = request.url)
 
@@ -326,24 +323,18 @@ def get_weather():
 
     return render_template('weather.html', title='Weather Info', data = json.loads(data.read().decode('utf8')))
 
-# //////////////////////////////////////////////////////////////////////////
+
 
 @app.route('/sign_in')
 def index():
     """Initiates sign in to Spotify app"""
 
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
-    print(cache_handler)
-    print('*'*50)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)
-    print(auth_manager)
-    print('*'*50)
 
     # Step 1. Display sign in link when no token
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         auth_url = auth_manager.get_authorize_url()
-        print(auth_url)
-        print('*'*50)
         return render_template('spotify_sign_in.html', auth_url=auth_url)
 
     # Step 3. Signed in with token => display data
@@ -355,8 +346,6 @@ def index():
 @app.route('/redirect')
 def redirectPage():
     """Handles redirect for Spotify API request"""
-    # http://127.0.0.1:5000/redirect
-    # http://localhost:5000/redirect
 
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private user-modify-playback-state', cache_handler=cache_handler, show_dialog=True)

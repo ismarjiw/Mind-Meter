@@ -228,7 +228,6 @@
             fetch(`https://open.spotify.com/oembed?url=${url}`)
                 .then((response) => response.json())
                 .then((data) => {
-                // console.log(data);
                 music.innerHTML = data.html;
                 });
             };
