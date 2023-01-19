@@ -3,6 +3,7 @@
 
 Live link: [Try out Mind Meter](100.26.194.141)  
 
+
 ## Table of Contents
 - [Project Description](https://github.com/ismarjiw/Mind-Meter#project-description)
 - [Tech Stack](https://github.com/ismarjiw/Mind-Meter#tech-stack)
@@ -13,7 +14,7 @@ Live link: [Try out Mind Meter](100.26.194.141)
 
 
 ## Project Description
-Mind Meter is a web app that helps users log timed meditation sessions, write journal reflections, and listen to calming music all in one space! Users start by creating an account and logging into their profile page. From there, they can choose to start a 5 or 10 minute meditation. While they're meditating, the user also has the option to listen to 4 different sound buttons ranging from rain sounds to etheral beats. If they have a Spotify account, they may also choose to listen to a curated meditation playlist as well. After they meditate, the user can write a journal reflection recording any revelations, thoughts or feelings they had during their meditation session. In addition, there is a handy focused breathing animation the user can reference to help with breath control during medtation. As well, to see if it would be a good day to go for a walk or not, by entering their zipcode, the user can check to see what their local weather is (weather info coming from Open Weather's API). And finally, the user can reference a bar graph charting what days they've meditated and for how long.
+Mind Meter is a web app that helps users log timed meditation sessions, write journal reflections, and listen to calming music all in one space! Users start by creating an account and logging into their profile page. From there, they can choose to start a 5 or 10 minute meditation. While they're meditating, the user also has the option to listen to 4 different sound buttons ranging from rain sounds to etheral beats. If they have a Spotify account, they may also choose to listen to a curated meditation playlist as well. After they meditate, the user can write a journal reflection recording any revelations, thoughts or feelings they had during their meditation session. In addition, there is a handy focused breathing animation the user can reference to help with breath control. To see if it would be a good day to go for a walk or not, the user can enter their zipcode and check to see what their local weather is (weather info coming from Open Weather's API). In addition, the user can reference a bar graph, charting what days they've meditated and for how long each day.
 
 With Mind Meter, anyone can start their meditation journey!
 
@@ -25,6 +26,7 @@ With Mind Meter, anyone can start their meditation journey!
 
 *profile page*  
 <img src="https://media4.giphy.com/media/GsyWuQAL3AUnrYqecs/giphy.gif?cid=790b76118e8f1ce67aabeeddea491f612d99f5c94344e72f&rid=giphy.gif&ct=g">
+
 
 ## Tech Stack
 - Python
@@ -49,11 +51,19 @@ APIs:
 
 
 ## Features
-- 
+- ***Create an account, login / logout, and delete account***
+- ***Start a meditation session with either a 5 or 10 minute meditation***
+- ***Write a journal reflection after a meditation***
+- ***Journal page where all past reflections can be reviewed and deleted if chosen***
+- ***Focused breathing animation to help with breath control***
+- ***Login to Spotify and listen to a curated meditation playlist that changes daily***
+- ***Check the weather to see if it's a good day to go for a walk***
+- ***View on an interactive bar graph what days a meditation was logged and how many minutes per day was spent meditating***
 
 
 ## Possible Future Features
-- ***---***:
+- ***Customizable timer that the user can set***
+- ******
 
 
 ## Known Bugs
