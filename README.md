@@ -123,7 +123,7 @@ To run Mind Meter locally on your computer:
       }
     }
     ```
-6. **In server.py, under flow, change the 'redirect_uri' to http://localhost:5001**
+6. **In `[server.py](https://github.com/ismarjiw/Mind-Meter/blob/main/server.py)`, under flow, change the 'redirect_uri' to http://localhost:5001**
 7. **Read the key variables into your shell**
   ```
   $ source secrets.sh
