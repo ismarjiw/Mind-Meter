@@ -18,6 +18,8 @@ Mind Meter is a web app that helps users log timed meditation sessions, write jo
 
 With Mind Meter, anyone can start their meditation journey!
 
+<hr>
+
 **homepage**
 
 <img src="https://media0.giphy.com/media/3PL3YXsdGLH3BakNsO/giphy.gif?cid=790b7611492fda7080098c644be66c6434f35c5a9d163c79&rid=giphy.gif&ct=g">
