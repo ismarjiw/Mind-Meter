@@ -136,4 +136,4 @@ To run Mind Meter locally on your computer:
   ```
   $ python3 server.py
   ```
-10. **Go to localhost:5001 in your browser and have fun with Mind Meter!**
+10. **Go to http://localhost:5001 in your browser and have fun with Mind Meter!**
