@@ -98,6 +98,7 @@ To run Mind Meter locally on your computer:
   - [OpenWeather](https://openweathermap.org/api)
   - [Spotify](https://developer.spotify.com/dashboard/) 
   - [Google](https://console.cloud.google.com/)
+  - In addition, set the redirect for Spotify in developer tools for your app to http://localhost:5001/redirect and for Google, http://localhost:5001/callback
 5. **Store your OpenWeather, Spotify, and Google API key**
   - Create a file called "secrets.sh" in the app directory. Add the code below to the file and replace the text in the quotation marks:
     ```
@@ -122,16 +123,17 @@ To run Mind Meter locally on your computer:
       }
     }
     ```
-6. **Read the key variables into your shell**
+6. **In server.py, under flow, change the 'redirect_uri' to http://localhost:5001**
+7. **Read the key variables into your shell**
   ```
   $ source secrets.sh
   ```
-7. **Create the database**
+8. **Create the database**
   ```
   $ python3 seed_data.py
   ```
-8. **Start up the Flask server**
+9. **Start up the Flask server**
   ```
   $ python3 server.py
   ```
-9. **Go to localhost:5001 in your browser and have fun with Mind Meter!**
+10. **Go to localhost:5001 in your browser and have fun with Mind Meter!**
