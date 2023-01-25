@@ -20,15 +20,15 @@ With Mind Meter, anyone can start their meditation journey!
 
 <hr>
 
-**homepage**
+**Homepage**
 
 <img src="https://media0.giphy.com/media/3PL3YXsdGLH3BakNsO/giphy.gif?cid=790b7611492fda7080098c644be66c6434f35c5a9d163c79&rid=giphy.gif&ct=g">
 
-**login page**
+**Login page**
 
 <img src="https://media4.giphy.com/media/zemz4fbHCsPYt90nYJ/giphy.gif?cid=790b7611070aadc16075ad1c84996680621fcb6306b0e60a&rid=giphy.gif&ct=g">
 
-**profile page**
+**Profile page**
 
 <img src="https://media4.giphy.com/media/GsyWuQAL3AUnrYqecs/giphy.gif?cid=790b76118e8f1ce67aabeeddea491f612d99f5c94344e72f&rid=giphy.gif&ct=g">
 
@@ -41,6 +41,7 @@ With Mind Meter, anyone can start their meditation journey!
 - SQLAlchemy
 - JavaScript
 - React
+- Chart.js 
 - jQuery
 - HTML
 - CSS
