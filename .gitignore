@@ -5,3 +5,4 @@ secrets.sh
 client_secret.json
 meditations.sql
 node_modules
+.DS_Store

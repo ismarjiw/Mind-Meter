@@ -1,8 +1,6 @@
 # Mind Meter: A meditation app
 ![Mind Meter header](https://i.imgur.com/bQf1Iaw.png)
 
-[Try out Mind Meter](http://meetmindmeter.com/)  
-
 
 ## Table of Contents
 - [Project Description](https://github.com/ismarjiw/Mind-Meter#project-description)
